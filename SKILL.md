@@ -77,7 +77,31 @@ Run these gates internally **before every action**. Never skip.
 
 # CORE DOMAIN TAXONOMY — OBSIDIAN MEMORY VAULT
 
-Every blueprint, ADR, and workflow standard lives permanently in the 33-folder Obsidian vault (`obsidian-vault/`).
+## Vault Path Resolution — Run Before Any Documentation Action
+
+OMEGA **never** assumes a fixed vault path. Before writing any document:
+
+```
+1. Run: python scripts/omega-cli.py resolve-vault
+   OR apply the algorithm from references/11-obsidian.md §1 manually.
+
+2. Resolution priority:
+   a. OMEGA_VAULT_PATH env var → use it
+   b. Find .git → walk up from cwd
+   c. docs/ exists with OMEGA structure → vault = docs/
+   d. docs/ exists, no vault yet        → vault = docs/vault/
+   e. No docs/ folder                   → vault = repo_root/docs/vault/
+   f. Legacy obsidian-vault/ found      → honour it, do not rename
+
+3. All documentation paths below use {vault}/ as the resolved root.
+   Example: {vault}/14-ADRs/ADR-0001-tech-stack.md
+```
+
+To initialise a new vault: `python scripts/omega-cli.py init-vault`
+To check vault health: `python scripts/omega-cli.py status`
+
+
+Every blueprint, ADR, and workflow standard lives permanently in the 33-folder Obsidian vault (`{vault}/`).
 
 ### Reference System — Unified Structure
 
@@ -309,7 +333,7 @@ type Role = 'super_admin' | 'admin' | 'manager' | 'user' | 'viewer';
 // 4. Log the access attempt (success AND failure)
 ```
 
-Document RBAC matrix in `obsidian-vault/12-RBAC/permission-matrix.md`.
+Document RBAC matrix in `{vault}/12-RBAC/permission-matrix.md`.
 
 ## 7. Google Workspace (GWS) Mandate
 - **Authentication**: `GOOGLE_APPLICATION_CREDENTIALS` service JSON or `gws auth login`. Raw API keys: **banned**
@@ -464,7 +488,7 @@ Key patterns, versions, or gotchas.
 When should this be reconsidered?
 ```
 
-Save to: `obsidian-vault/14-ADRs/ADR-NNNN-{short-title}.md`
+Save to: `{vault}/14-ADRs/ADR-NNNN-{short-title}.md`
 
 ---
 
@@ -491,11 +515,11 @@ Always generate diagrams for architectural decisions. Types by use case:
 
 # OBSIDIAN KNOWLEDGE OPERATING SYSTEM
 
-All documentation is Obsidian-compatible markdown in `obsidian-vault/`. **Documentation is never poor. It is enterprise-grade, deeply detailed, folder-structured, linked, traceable, and continuously synchronized.**
+All documentation is Obsidian-compatible markdown in `{vault}/`. **Documentation is never poor. It is enterprise-grade, deeply detailed, folder-structured, linked, traceable, and continuously synchronized.**
 
 ### Full 33-Folder Vault Structure
 ```
-obsidian-vault/
+{vault}/
 ├── 00-Executive/          vision, roadmap, OKRs
 ├── 01-Architecture/       blueprints, bounded contexts, event catalog
 ├── 02-Product/            user stories, personas, feature flags
@@ -650,8 +674,8 @@ Every time OMEGA is invoked:
 
 1. **Context & Loader Setup**: If frontend/UI → load via `load-context.mjs`, select register, load matching command references
 2. **Detect Domain**: Classify (Greenfield / Feature Dev / Optimization / Security / SRE / Documentation / Marketing)
-3. **Consult Truth Engine**: Read relevant domain guidelines in `obsidian-vault/` and matching ADR rules
-4. **Draft ADR First**: If task involves significant architectural or layout choice → halt, draft ADR in `obsidian-vault/14-ADRs/`, present rationale first
+3. **Consult Truth Engine**: Read relevant domain guidelines in `{vault}/` and matching ADR rules
+4. **Draft ADR First**: If task involves significant architectural or layout choice → halt, draft ADR in `{vault}/14-ADRs/`, present rationale first
 5. **Self-Interrogation**: Run all audit gate questions silently before writing a single line
 6. **Relentless Implementation**: Write clean, secure, visually silent, high-performance code. Apply all bans. Apply all mandates.
 7. **Audit Verification**: Run `omega-cli.py audit` to confirm zero compliance drift

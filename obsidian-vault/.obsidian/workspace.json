@@ -1,0 +1,342 @@
+{
+  "main": {
+    "id": "6b98031266ff5866",
+    "type": "split",
+    "children": [
+      {
+        "id": "fb2a2f7cc27dea7e",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "7d41ff8040f221bc",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "02 - PROJECTS/Dashboard KPIs.md",
+                "mode": "preview",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Dashboard KPIs"
+            }
+          },
+          {
+            "id": "4cca50561077b788",
+            "type": "leaf",
+            "state": {
+              "type": "cm-changelog-view",
+              "state": {},
+              "icon": "lucide-ghost",
+              "title": "cm-changelog-view"
+            }
+          },
+          {
+            "id": "77f088d3c989e68b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "04 - CAREER/Skills Gap.md",
+                "mode": "preview",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Skills Gap"
+            }
+          },
+          {
+            "id": "56d233d3cc604ac7",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "00 - DASHBOARD/Home.md",
+                "mode": "preview",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Home"
+            }
+          },
+          {
+            "id": "45f9f7bd285f3071",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "00 - DASHBOARD/Home.md",
+                "mode": "preview",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Home"
+            }
+          },
+          {
+            "id": "d83e150dc164ba5c",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Visualização de diagrama de grafo"
+            }
+          },
+          {
+            "id": "a1ad36c47d16952c",
+            "type": "leaf",
+            "state": {
+              "type": "card-board-view",
+              "state": {},
+              "icon": "lucide-ghost",
+              "title": "card-board-view"
+            }
+          },
+          {
+            "id": "4353ba806c498569",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "04 - CAREER/Certifications.md",
+                "mode": "preview",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Certifications"
+            }
+          }
+        ],
+        "currentTab": 7
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "eb47d77b41467eb9",
+    "type": "split",
+    "children": [
+      {
+        "id": "4cf79855d2229319",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "e2d5cc6f8dec00e9",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Explorador de ficheiros"
+            }
+          },
+          {
+            "id": "dd4c00fb8096ad82",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "tag:#theme/machine-learning",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "d0a5ead194d2b16a",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "51def5cd8c78da24",
+    "type": "split",
+    "children": [
+      {
+        "id": "49d779f79c8231d6",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "6f160d5574717817",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "08 - PROCESSOS/Processos Index.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks para Processos Index"
+            }
+          },
+          {
+            "id": "ba3f6ded612cf040",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "08 - PROCESSOS/Processos Index.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Links externos de Processos Index"
+            }
+          },
+          {
+            "id": "05a601f1e7bafee1",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Etiquetas"
+            }
+          },
+          {
+            "id": "efb8fd0676d44484",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "Todas as propriedades"
+            }
+          },
+          {
+            "id": "b674fc6c1cfbcc4a",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "08 - PROCESSOS/Processos Index.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Índice de Processos Index"
+            }
+          },
+          {
+            "id": "d470684d90f7d34c",
+            "type": "leaf",
+            "state": {
+              "type": "calendar",
+              "state": {},
+              "icon": "calendar-with-checkmark",
+              "title": "Calendar"
+            }
+          },
+          {
+            "id": "7064eca0727c1c03",
+            "type": "leaf",
+            "state": {
+              "type": "chronology-calendar-view",
+              "state": {},
+              "icon": "lucide-ghost",
+              "title": "chronology-calendar-view"
+            }
+          }
+        ],
+        "currentTab": 3
+      }
+    ],
+    "direction": "horizontal",
+    "width": 389
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "obsidian-excalidraw-plugin:New drawing": false,
+      "switcher:Abrir Quick Switcher": false,
+      "graph:Abrir Visualização de diagrama de grafo": false,
+      "canvas:Criar novo Canvas": false,
+      "daily-notes:Abrir nota de hoje": false,
+      "templates:Inserir templates": false,
+      "command-palette:Abrir paleta de comando": false,
+      "bases:Criar nova base": false,
+      "templater-obsidian:Templater": false,
+      "workspaces:Gerir esquema da área de trabalho": false,
+      "periodic-notes:Open today": false
+    }
+  },
+  "active": "4353ba806c498569",
+  "lastOpenFiles": [
+    "00 - DASHBOARD/Home.md",
+    "08 - PROCESSOS/Processo - Criar Nota de Conhecimento.md",
+    "08 - PROCESSOS/Processos Index.md",
+    "08 - PROCESSOS/Processo - Treino de Modelo ML.md",
+    "08 - PROCESSOS/Processo - Revisao Semanal.md",
+    "08 - PROCESSOS/Processo - Revisao Mensal.md",
+    "08 - PROCESSOS/Processo - Pipeline de Dados.md",
+    "08 - PROCESSOS/Processo - Iniciar Projecto.md",
+    "08 - PROCESSOS/Procedimento - SQL Queries.md",
+    "GDIA Roadmap.canvas",
+    "humanizeskill.md",
+    "Knowledge Map.canvas",
+    "Project Flow.canvas",
+    "04 - CAREER/Certifications.md",
+    "02 - PROJECTS/Project Board.base",
+    "02 - PROJECTS/CLV Model.md",
+    "01 - KNOWLEDGE/AI Generativa/AI Generativa.md",
+    "05 - THINKING/Ideas.md",
+    "04 - CAREER/Skills Tracker.base",
+    "04 - CAREER/Skills Gap.md",
+    "04 - CAREER/Certification Tracker.base",
+    "03 - EXECUTION/Weekly Review/Weekly Review.md",
+    "03 - EXECUTION/Monthly Review/Monthly Review.md",
+    "03 - EXECUTION/Daily Notes/Daily Notes.md",
+    "02 - PROJECTS/Recommendation Engine.md",
+    "02 - PROJECTS/Dashboard KPIs.md",
+    "02 - PROJECTS/Churn Model.md",
+    "01 - KNOWLEDGE/Business/Business.md",
+    "01 - KNOWLEDGE/AI Generativa/LLMs e Fundamentos.md",
+    "01 - KNOWLEDGE/AI Generativa/Fine-Tuning e Agentes.md",
+    "01 - KNOWLEDGE/AI Generativa/Ética e Segurança em IA.md",
+    "01 - KNOWLEDGE/AI Generativa/Engenharia de Prompts.md",
+    "08 - PROCESSOS",
+    "07 - AI LAB",
+    "Sem título.base",
+    "Sem título.canvas",
+    "Sem título 1.canvas",
+    "Untitled.base",
+    "Untitled.canvas",
+    "Review/Daily",
+    "Review",
+    "_check2.ps1"
+  ]
+}

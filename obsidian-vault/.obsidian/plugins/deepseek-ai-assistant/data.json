@@ -1,0 +1,39 @@
+{
+  "models": [
+    {
+      "id": "default-deepseek-r1",
+      "name": "DeepSeek R1",
+      "modelId": "deepseek-reasoner",
+      "apiKey": "sk-2bdcb24f6e9c4d638a1a233aacbadead",
+      "apiUrl": "https://api.deepseek.com",
+      "providerUrl": "https://platform.deepseek.com/"
+    },
+    {
+      "id": "default-deepseek-v3",
+      "name": "DeepSeek V3",
+      "modelId": "deepseek-chat",
+      "apiKey": "sk-2bdcb24f6e9c4d638a1a233aacbadead",
+      "apiUrl": "https://api.deepseek.com",
+      "providerUrl": "https://platform.deepseek.com/"
+    }
+  ],
+  "promptStats": {
+    "2026-04-22": {
+      "num": 2,
+      "prompt_content": [
+        {
+          "id_timestamp": "1776851053148",
+          "prompt": "Ola, estude tudo\n",
+          "answer": "Olá! 😊\n\nEntendi que você quer estudar \"tudo\", mas como sou um assistente de IA, posso ajudá-lo em diversas áreas — matemática, história, ciências, línguas, programação, filosofia, etc.\n\nSe puder especificar um tema ou disciplina, posso oferecer explicações, resumos, exercícios, ou até um plano de estudos. Se a ideia for estudar de forma geral, posso sugerir métodos eficazes, como:\n\n- **Técnica Pomodoro** (25 min de foco, 5 de pausa)\n- **Mapas mentais** para organizar ideias\n- **Resumo ativo** (escrever com suas próprias palavras)\n- **Perguntas e respostas** para fixar conteúdo\n\nDiga-me o que você gostaria de estudar primeiro, e vamos começar! 🚀",
+          "model": "default-deepseek-r1"
+        },
+        {
+          "id_timestamp": "1776851089177",
+          "prompt": "O que entendeste sobre o GDIA?\n",
+          "answer": "Desculpe, mas não tenho informações específicas sobre o que \"GDIA\" significa. Pode ser uma sigla para um termo técnico, uma organização, um framework ou um conceito em uma área específica (como tecnologia, direito, economia, etc.). \n\nSe você puder fornecer mais contexto — por exemplo, a área de aplicação ou o significado completo da sigla —, ficarei feliz em ajudar com uma explicação mais detalhada. Caso contrário, sugiro verificar a fonte onde encontrou essa sigla para esclarecer seu significado.",
+          "model": "default-deepseek-r1"
+        }
+      ]
+    }
+  }
+}
