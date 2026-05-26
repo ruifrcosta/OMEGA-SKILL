@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prisma | Creative Studio</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Almarai', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+    }
+    body {
+      background: #000;
+      color: #E1E0CC;
+      overflow-x: hidden;
+    }
+    
+    .font-serif {
+      font-family: 'Instrument Serif', serif;
+    }
+
+    /* Fractal Noise Overlays */
+    .noise-overlay {
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
+    .bg-noise {
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
+  </style>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#DEDBC8'
+          },
+          fontFamily: {
+            serif: ['"Instrument Serif"', 'serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- React Stack CDNs -->
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"></script>
+  <script src="https://unpkg.com/framer-motion@11.11.17/dist/framer-motion.js"></script>
+  <script>window.Motion = window.FramerMotion;</script>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect, useRef } = React;
+    const { motion, useScroll, useTransform, AnimatePresence } = window.Motion;
+
+    // WordsPullUp Component
+    function WordsPullUp({ text, showAsterisk, className }) {
+      const containerRef = useRef(null);
+      const [isInView, setIsInView] = useState(false);
+
+      useEffect(() => {
+        const observer = new IntersectionObserver(([entry]) => {
+          if (entry.isIntersecting) {
+            setIsInView(true);
+          }
+        }, { threshold: 0.1, once: true });
+
+        if (containerRef.current) {
+          observer.observe(containerRef.current);
+        }
+        return () => {
+          if (containerRef.current) observer.unobserve(containerRef.current);
+        };
+      }, []);
+
+      const words = text.split(" ");
+
+      return (
+        <p 
+          ref={containerRef}
+          className={`flex flex-wrap justify-center row-gap-1 ${className}`}
+        >
+          {words.map((word, i) => {
+            const isLast = i === words.length - 1;
+            return (
+              <span key={i} className="overflow-hidden inline-block relative py-1" style={{ marginRight: '0.28em' }}>
+                <motion.span
+                  className="inline-block relative"
+                  initial={{ y: "100%" }}
+                  animate={isInView ? { y: 0 } : {}}
+                  transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: i * 0.08 }}
+                >
+                  {word}
+                  {isLast && showAsterisk && (
+                    <span className="absolute top-[0.1em] -right-[0.3em] text-[0.31em] font-light font-body">
+                      *
+                    </span>
+                  )}
+                </motion.span>
+              </span>
+            );
+          })}
+        </p>
+      );
+    }
+
+    // WordsPullUpMultiStyle Component
+    function WordsPullUpMultiStyle({ segments, className }) {
+      const containerRef = useRef(null);
+      const [isInView, setIsInView] = useState(false);
+
+      useEffect(() => {
+        const observer = new IntersectionObserver(([entry]) => {
+          if (entry.isIntersecting) {
+            setIsInView(true);
+          }
+        }, { threshold: 0.1, once: true });
+
+        if (containerRef.current) {
+          observer.observe(containerRef.current);
+        }
+        return () => {
+          if (containerRef.current) observer.unobserve(containerRef.current);
+        };
+      }, []);
+
+      // Build flat word map with associated styles
+      let wordIndex = 0;
+      const parsedWords = segments.flatMap(seg => {
+        return seg.text.split(" ").map(word => ({
+          word,
+          className: seg.className,
+          globalIdx: wordIndex++
+        }));
+      });
+
+      return (
+        <div ref={containerRef} className={`inline-flex flex-wrap justify-center ${className}`}>
+          {parsedWords.map(({ word, className: wordClass, globalIdx }) => (
+            <span key={globalIdx} className="overflow-hidden inline-block py-1" style={{ marginRight: '0.28em' }}>
+              <motion.span
+                className={`inline-block ${wordClass}`}
+                initial={{ y: "100%" }}
+                animate={isInView ? { y: 0 } : {}}
+                transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: globalIdx * 0.08 }}
+              >
+                {word}
+              </motion.span>
+            </span>
+          ))}
+        </div>
+      );
+    }
+
+    // Animated scroll reveal paragraph character by character
+    function ScrollRevealParagraph({ text, className }) {
+      const targetRef = useRef(null);
+      const { scrollYProgress } = useScroll({
+        target: targetRef,
+        offset: ["start 0.8", "end 0.2"]
+      });
+
+      const chars = text.split("");
+      const totalChars = chars.length;
+
+      return (
+        <p ref={targetRef} className={`flex flex-wrap justify-center leading-relaxed ${className}`}>
+          {chars.map((char, index) => {
+            const charProgress = index / totalChars;
+            const start = charProgress - 0.1;
+            const end = charProgress + 0.05;
+            
+            // Map scroll opacity between 0.2 and 1
+            const opacity = useTransform(scrollYProgress, [Math.max(0, start), Math.min(1, end)], [0.2, 1]);
+
+            return (
+              <motion.span key={index} style={{ opacity }} className="inline-block whitespace-pre">
+                {char}
+              </motion.span>
+            );
+          })}
+        </p>
+      );
+    }
+
+    function App() {
+      const featuresRef = useRef(null);
+      const [featuresInView, setFeaturesInView] = useState(false);
+
+      useEffect(() => {
+        const observer = new IntersectionObserver(([entry]) => {
+          if (entry.isIntersecting) {
+            setFeaturesInView(true);
+          }
+        }, { threshold: 0.05 });
+
+        if (featuresRef.current) {
+          observer.observe(featuresRef.current);
+        }
+        return () => {
+          if (featuresRef.current) observer.unobserve(featuresRef.current);
+        };
+      }, []);
+
+      return (
+        <div className="w-full bg-black text-[#E1E0CC] select-none">
+          {/* Section 1: Hero */}
+          <section className="relative h-screen p-4 md:p-6 overflow-hidden">
+            <div className="relative w-full h-full rounded-2xl md:rounded-[2rem] overflow-hidden flex flex-col justify-between">
+              
+              {/* Background Video */}
+              <video
+                src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260405_170732_8a9ccda6-5cff-4628-b164-059c500a2b41.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="absolute inset-0 w-full h-full object-cover z-0"
+              />
+
+              {/* Noise overlay */}
+              <div className="absolute inset-0 noise-overlay opacity-[0.7] mix-blend-overlay pointer-events-none z-10" />
+
+              {/* Gradient overlay */}
+              <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60 z-10" />
+
+              {/* Navbar Pill */}
+              <header className="absolute top-0 left-1/2 -translate-x-1/2 z-30 w-auto">
+                <nav className="bg-black rounded-b-2xl md:rounded-b-3xl px-4 py-2 md:px-8 flex items-center gap-3 sm:gap-6 md:gap-12 lg:gap-14 border border-t-0 border-[#DEDBC8]/10 shadow-lg">
+                  <a href="#story" className="text-[10px] sm:text-xs md:text-sm font-medium tracking-wide transition-colors hover:text-[#E1E0CC]" style={{ color: 'rgba(225, 224, 204, 0.8)' }}>Our story</a>
+                  <a href="#collective" className="text-[10px] sm:text-xs md:text-sm font-medium tracking-wide transition-colors hover:text-[#E1E0CC]" style={{ color: 'rgba(225, 224, 204, 0.8)' }}>Collective</a>
+                  <a href="#workshops" className="text-[10px] sm:text-xs md:text-sm font-medium tracking-wide transition-colors hover:text-[#E1E0CC]" style={{ color: 'rgba(225, 224, 204, 0.8)' }}>Workshops</a>
+                  <a href="#programs" className="text-[10px] sm:text-xs md:text-sm font-medium tracking-wide transition-colors hover:text-[#E1E0CC]" style={{ color: 'rgba(225, 224, 204, 0.8)' }}>Programs</a>
+                  <a href="#inquiries" className="text-[10px] sm:text-xs md:text-sm font-medium tracking-wide transition-colors hover:text-[#E1E0CC]" style={{ color: 'rgba(225, 224, 204, 0.8)' }}>Inquiries</a>
+                </nav>
+              </header>
+
+              {/* Hero Content (Bottom-aligned Grid) */}
+              <div className="relative z-20 mt-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-end p-8 md:p-12 lg:p-16 w-full">
+                {/* Giant Title Left */}
+                <div className="lg:col-span-8 overflow-visible flex justify-start">
+                  <WordsPullUp
+                    text="Prisma"
+                    showAsterisk={true}
+                    className="text-[26vw] sm:text-[24vw] md:text-[22vw] lg:text-[20vw] xl:text-[19vw] 2xl:text-[20vw] font-medium leading-[0.85] tracking-[-0.07em] text-[#E1E0CC] select-none cursor-default"
+                  />
+                </div>
+
+                {/* Subtitle & CTA Right */}
+                <div className="lg:col-span-4 flex flex-col items-start gap-6 lg:pb-4">
+                  <motion.p
+                    className="text-primary/70 text-xs sm:text-sm md:text-base font-light leading-snug tracking-wide"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.5 }}
+                  >
+                    Prisma is a worldwide network of visual artists, filmmakers and storytellers bound not by place, status or labels but by passion and hunger to unlock potential through our unique perspectives.
+                  </motion.p>
+
+                  <motion.button
+                    className="group flex items-center gap-2 bg-[#DEDBC8] hover:gap-3 text-black text-xs sm:text-sm font-semibold rounded-full pl-6 pr-1.5 py-1.5 transition-all duration-300 active:scale-95 shadow-md"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.7 }}
+                  >
+                    Join the lab
+                    <span className="bg-black text-[#DEDBC8] rounded-full w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                      </svg>
+                    </span>
+                  </motion.button>
+                </div>
+              </div>
+
+            </div>
+          </section>
+
+          {/* Section 2: About */}
+          <section id="story" className="bg-black py-32 px-4 md:px-12 flex justify-center items-center">
+            <div className="bg-[#101010] rounded-[2rem] w-full max-w-6xl p-8 sm:p-16 md:p-24 text-center border border-white/5 shadow-2xl relative overflow-hidden">
+              <span className="text-primary text-[10px] sm:text-xs tracking-[0.2em] uppercase font-semibold block mb-8">
+                Visual arts
+              </span>
+
+              {/* Multistyle heading */}
+              <WordsPullUpMultiStyle
+                segments={[
+                  { text: "I am Marcus Chen, ", className: "font-normal text-[#E1E0CC]" },
+                  { text: "a self-taught director. ", className: "font-serif italic text-primary/90" },
+                  { text: "I have skills in color grading, visual effects, and narrative design.", className: "font-normal text-[#E1E0CC]" }
+                ]}
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl max-w-4xl mx-auto leading-[0.95] sm:leading-[0.9] tracking-tight font-medium"
+              />
+
+              {/* Scroll reveal paragraph */}
+              <div className="mt-16 max-w-3xl mx-auto border-t border-white/5 pt-12">
+                <ScrollRevealParagraph
+                  text="Over the last seven years, I have worked with Parallax, a Berlin-based production house that crafts cinema, series, and Noir Studio in Paris. Together, we have created work that has earned international acclaim at several major festivals."
+                  className="text-[#DEDBC8] font-light text-sm sm:text-base md:text-lg tracking-wide text-center"
+                />
+              </div>
+            </div>
+          </section>
+
+          {/* Section 3: Features */}
+          <section id="collective" className="relative min-h-screen bg-black py-28 px-6 md:px-12 overflow-hidden flex flex-col justify-between">
+            {/* Subtle background noise */}
+            <div className="absolute inset-0 bg-noise opacity-[0.15] mix-blend-color-burn pointer-events-none" />
+
+            {/* Header */}
+            <div className="relative z-10 text-center mb-16">
+              <WordsPullUpMultiStyle
+                segments={[
+                  { text: "Studio-grade workflows for visionary creators. ", className: "text-[#E1E0CC] block mb-2" },
+                  { text: "Built for pure vision. Powered by art.", className: "text-gray-500 block" }
+                ]}
+                className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-normal tracking-tight"
+              />
+            </div>
+
+            {/* Cards Grid */}
+            <div ref={featuresRef} className="relative z-10 w-full max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:h-[480px]">
+              
+              {/* Card 1: Video Card */}
+              <motion.div
+                className="relative rounded-[1.5rem] overflow-hidden min-h-[300px] lg:h-full group border border-white/5"
+                initial={{ scale: 0.95, opacity: 0 }}
+                animate={featuresInView ? { scale: 1, opacity: 1 } : {}}
+                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0 }}
+              >
+                <video
+                  src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260406_133058_0504132a-0cf3-4450-a370-8ea3b05c95d4.mp4"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="absolute inset-0 w-full h-full object-cover z-0 filter brightness-90 group-hover:scale-105 transition-transform duration-700 ease-out"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10" />
+                <div className="absolute bottom-6 left-6 z-20">
+                  <p className="text-xs uppercase tracking-widest text-[#DEDBC8]/60 font-semibold mb-1">Canvas</p>
+                  <h4 className="text-lg font-medium text-[#E1E0CC]">Your creative canvas.</h4>
+                </div>
+              </motion.div>
+
+              {/* Card 2: Storyboard */}
+              <motion.div
+                className="rounded-[1.5rem] bg-[#212121]/50 backdrop-blur-md p-6 border border-white/5 flex flex-col justify-between min-h-[300px] lg:h-full group"
+                initial={{ scale: 0.95, opacity: 0 }}
+                animate={featuresInView ? { scale: 1, opacity: 1 } : {}}
+                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
+              >
+                <div>
+                  <div className="flex items-center justify-between">
+                    <img 
+                      src="https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260405_171918_4a5edc79-d78f-4637-ac8b-53c43c220606.png&w=1280&q=85" 
+                      className="w-12 h-12 rounded-xl object-cover border border-white/10" 
+                      alt="Icon 01"
+                    />
+                    <span className="text-xs tracking-wider text-primary font-bold">01</span>
+                  </div>
+                  <h4 className="mt-8 text-xl font-semibold text-[#E1E0CC] tracking-tight">Project Storyboard</h4>
+                  
+                  <ul className="mt-6 space-y-3">
+                    <li className="flex items-start gap-2.5 text-xs text-gray-400">
+                      <svg className="w-4 h-4 text-primary shrink-0 mt-0.5" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                      Sequence layout triggers
+                    </li>
+                    <li className="flex items-start gap-2.5 text-xs text-gray-400">
+                      <svg className="w-4 h-4 text-primary shrink-0 mt-0.5" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                      Timeline composition control
+                    </li>
+                    <li className="flex items-start gap-2.5 text-xs text-gray-400">
+                      <svg className="w-4 h-4 text-primary shrink-0 mt-0.5" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                      Real-time scene synchronization
+                    </li>
+                  </ul>
+                </div>
+
+                <a href="#" className="flex items-center gap-2 text-xs font-semibold text-primary/80 uppercase tracking-widest mt-8 group-hover:gap-3 transition-all duration-300">
+                  Learn more
+                  <svg className="w-4 h-4 -rotate-45" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </a>
+              </motion.div>
+
+              {/* Card 3: Smart Critiques */}
+              <motion.div
+                className="rounded-[1.5rem] bg-[#212121]/50 backdrop-blur-md p-6 border border-white/5 flex flex-col justify-between min-h-[300px] lg:h-full group"
+                initial={{ scale: 0.95, opacity: 0 }}
+                animate={featuresInView ? { scale: 1, opacity: 1 } : {}}
+                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
+              >
+                <div>
+                  <div className="flex items-center justify-between">
+                    <img 
+                      src="https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260405_171741_ed9845ab-f5b2-4018-8ce7-07cc01823522.png&w=1280&q=85" 
+                      className="w-12 h-12 rounded-xl object-cover border border-white/10" 
+                      alt="Icon 02"
+                    />
+                    <span className="text-xs tracking-wider text-primary font-bold">02</span>
+                  </div>
+                  <h4 className="mt-8 text-xl font-semibold text-[#E1E0CC] tracking-tight">Smart Critiques</h4>
+                  
+                  <ul className="mt-6 space-y-3">
+                    <li className="flex items-start gap-2.5 text-xs text-gray-400">
+                      <svg className="w-4 h-4 text-primary shrink-0 mt-0.5" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                      Automated aesthetic audits
+                    </li>
+                    <li className="flex items-start gap-2.5 text-xs text-gray-400">
+                      <svg className="w-4 h-4 text-primary shrink-0 mt-0.5" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                      Composition guidelines
+                    </li>
+                    <li className="flex items-start gap-2.5 text-xs text-gray-400">
+                      <svg className="w-4 h-4 text-primary shrink-0 mt-0.5" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                      Contrast checks
+                    </li>
+                  </ul>
+                </div>
+
+                <a href="#" className="flex items-center gap-2 text-xs font-semibold text-primary/80 uppercase tracking-widest mt-8 group-hover:gap-3 transition-all duration-300">
+                  Learn more
+                  <svg className="w-4 h-4 -rotate-45" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </a>
+              </motion.div>
+
+              {/* Card 4: Immersion Capsule */}
+              <motion.div
+                className="rounded-[1.5rem] bg-[#212121]/50 backdrop-blur-md p-6 border border-white/5 flex flex-col justify-between min-h-[300px] lg:h-full group"
+                initial={{ scale: 0.95, opacity: 0 }}
+                animate={featuresInView ? { scale: 1, opacity: 1 } : {}}
+                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.45 }}
+              >
+                <div>
+                  <div className="flex items-center justify-between">
+                    <img 
+                      src="https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260405_171809_f56666dc-c099-4778-ad82-9ad4f209567b.png&w=1280&q=85" 
+                      className="w-12 h-12 rounded-xl object-cover border border-white/10" 
+                      alt="Icon 03"
+                    />
+                    <span className="text-xs tracking-wider text-primary font-bold">03</span>
+                  </div>
+                  <h4 className="mt-8 text-xl font-semibold text-[#E1E0CC] tracking-tight">Immersion Capsule</h4>
+                  
+                  <ul className="mt-6 space-y-3">
+                    <li className="flex items-start gap-2.5 text-xs text-gray-400">
+                      <svg className="w-4 h-4 text-primary shrink-0 mt-0.5" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                      Quiet mode notifications
+                    </li>
+                    <li className="flex items-start gap-2.5 text-xs text-gray-400">
+                      <svg className="w-4 h-4 text-primary shrink-0 mt-0.5" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                      Ambient sound generator
+                    </li>
+                    <li className="flex items-start gap-2.5 text-xs text-gray-400">
+                      <svg className="w-4 h-4 text-primary shrink-0 mt-0.5" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                      Focus calendar syncing
+                    </li>
+                  </ul>
+                </div>
+
+                <a href="#" className="flex items-center gap-2 text-xs font-semibold text-primary/80 uppercase tracking-widest mt-8 group-hover:gap-3 transition-all duration-300">
+                  Learn more
+                  <svg className="w-4 h-4 -rotate-45" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </a>
+              </motion.div>
+
+            </div>
+          </section>
+        </div>
+      );
+    }
+
+    const container = document.getElementById('root');
+    const root = ReactDOM.createRoot(container);
+    root.render(<App />);
+  </script>
+</body>
+</html>
