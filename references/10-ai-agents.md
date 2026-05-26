@@ -92,3 +92,33 @@ def hybrid_search(query: str, limit: int = 5):
 1.  **Strict Output Schemas**: Force models to output valid JSON conforming to an explicit Zod schema using structural JSON models.
 2.  **Prompt Versioning**: Maintain all prompt templates under VCS control (`apps/api/prompts/`) as raw files and reference them via explicit version IDs (e.g. `PROMPT_WORKSPACE_SUMMARY_V1_2`).
 3.  **Assertion Validation**: Filter and sanitize outputs before consumption. If the response violates the schema boundary, reject the step and request a retry.
+
+---
+
+## 6. Superpowers Agent Execution Framework {#superpowers}
+> Distilled from `obra/superpowers.git`
+
+Every OMEGA AI agent operates within a **rigid vs flexible process priority model** designed to eradicate developer laziness and guarantee elite execution.
+
+### The Bootstrap-First Rule
+When a task begins:
+1. **Never** jump straight to coding.
+2. Immediately check if a specialized engineering skill is present.
+3. If a matching skill has even a **1% applicability chance**, invoke it first. Announce: `Using [skill-name] to [purpose]`.
+
+### Process Priority Ordering
+When handling complex multi-stage tasks:
+1. Run **Process Skills** first (e.g. Brainstorming, Systematic Debugging, Planning).
+2. Run **Implementation/Domain Skills** second (e.g. TDD, Component creation).
+
+### Rigid vs Flexible Skills
+- **Rigid (Execution-Critical)**: TDD, Systematic Debugging, Code Quality Audits. The agent **must follow all checklists exactly** without any shortcuts or skipping steps.
+- **Flexible (Pattern-Oriented)**: UI Design Lenses, Refactoring Patterns. The agent adapts the principles dynamically to the target workspace context.
+
+### The Red Flags Table (Lazy Rationalizations to Kill)
+| Red Flag / Excuse | System Rejection | Correct Action |
+|---|---|---|
+| "This task is simple, I don't need a plan." | Rejected (Laziness) | Write a 3-step concise checklist anyway |
+| "I need to explore the codebase first." | Suspended (Lack of focus) | Target specific files based on imports/configs |
+| "Writing tests is overkill for this tweak." | Banned (Poor quality) | Enforce TDD cycle; red-green-refactor |
+| "Let me try standard inline fixes first." | Banned (Vibe-coding) | Apply systematic diagnostic steps |

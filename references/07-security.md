@@ -343,3 +343,35 @@ if (!detected || !ALLOWED.includes(detected.mime)) {
   throw new BadRequestException('Invalid file type');
 }
 ```
+
+---
+
+## 9. Dynamic Network Session Debugging & API Audit {#network-session}
+> Distilled from `wannabehero/charles-proxy-extract-skill.git`
+
+For deep API audits, vulnerability hunting, and integration tracing, inspect HTTP session dumps (`.chlsj` Charles JSON exports) to analyze actual payload exchanges.
+
+### Script Companion Pattern: Charles Session Parser (`extract_responses.py`)
+Rather than parsing raw files directly in the LLM context (saving tokens), OMEGA utilizes a local python parser helper:
+
+```bash
+# CLI Tool Usage:
+python3 scripts/extract_responses.py <session_dump.chlsj> [options]
+
+# Filter by endpoints containing "auth":
+python3 scripts/extract_responses.py session.chlsj "auth"
+
+# Inspect request bodies for POST/PUT mutations:
+python3 scripts/extract_responses.py session.chlsj -m POST
+
+# Summarize traffic patterns without body bloat:
+python3 scripts/extract_responses.py session.chlsj --summary-only
+```
+
+### Diagnostic Audit Steps:
+1. **Filter Traffic**: Extract targets using method filter (`-m`) and first-match limiters (`-f / --first-only`).
+2. **Review Request Structures**: Ensure no dynamic credentials, passwords, or PII appear in raw query parameters.
+3. **Compare Schema Compliance**: Extract the response payload structure and validate it against the target OpenAPI schema.
+4. **Identify Information Leaks**: Look for overly verbose error traces or database schemas printed in API response bodies.
+5. **Output JSON Summary**: Save filtered segments to lightweight schema files for automated model ingestion:
+   `{ extracted_at, method_summary, target_requests: [] }`

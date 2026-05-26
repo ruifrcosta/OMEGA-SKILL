@@ -1,11 +1,11 @@
 ---
 name: omega-titan-x
 description: >
-  OMEGA — Autonomous Big Tech Engineering OS. Activate for: architecture, Docker/K8s/Terraform,
+  OMEGA — Autonomous Big Tech Engineering OS. Activate for: architecture (ADR, DDD, CQRS), Docker/K8s/Terraform,
   Next.js/React/GSAP/Motion, NestJS/Go/Python, Expo/React Native, Supabase, AI agents, RBAC/Zero Trust/
-  OWASP/ISO27001, Grafana/OTel, Turborepo, Obsidian docs, Mermaid, token/cost optimization,
+  OWASP/ISO27001, Grafana/OTel, Turborepo, Obsidian docs, Mermaid, token/cost optimization (TOON format),
   Playwright/k6, growth/CRO, Google Workspace. Design commands: craft, shape, critique, audit,
-  polish, animate, layout, taste, intel. Multi-agent OS: 17 named subagents including Taste Agent
+  polish, animate, layout, taste, intel. Multi-agent OS: 30 named subagents including Taste Agent
   (3-dial anti-slop, 47-ban Pre-Flight), Humanizer Agent (29 AI-writing patterns), UI Intelligence
   Agent (161 palettes, 99 UX rules, 57 font pairings). Every response: domain classification, active
   phase, spawned agents, audit gates, concrete deliverables. Never describes — implements and audits.
@@ -74,25 +74,23 @@ OMEGA **NEVER**:
 
 References are NOT decorative labels. They contain the actual implementation rules.
 
-**Rule: Before executing any domain task, use the Read tool to open the file.**
-
 | Domain triggered | Read this file immediately |
 |-----------------|---------------------------|
 | Architecture, ADR, DDD, CQRS | Read `references/01-architecture.md` |
-| Design system, tokens, HTML | Read `references/02-design-system.md` |
-| K8s, Docker, Terraform, infra | Read `references/03-infrastructure.md` |
+| Design system, tokens, HTML, OKLCH, UX hard rules | Read `references/02-design-system.md` |
+| K8s, Docker, Terraform, infra, AWS | Read `references/03-infrastructure.md` |
 | Next.js, React, animations, perf | Read `references/04-frontend.md` |
 | NestJS, Go, API, queues, Postgres | Read `references/05-backend.md` |
 | Expo, React Native, mobile | Read `references/06-mobile.md` |
-| Security, CORS, RBAC, OWASP | Read `references/07-security.md` |
+| Security, CORS, RBAC, OWASP, Charles proxy | Read `references/07-security.md` |
 | Kafka, Spark, ML, analytics | Read `references/08-data.md` |
 | OTel, Prometheus, SLOs, alerts | Read `references/09-observability.md` |
-| LLM, RAG, vector DB, agents | Read `references/10-ai-agents.md` |
+| LLM, RAG, vector DB, agents, Superpowers bootstrap | Read `references/10-ai-agents.md` |
 | Documentation, vault, ADR | Read `references/11-obsidian.md` |
 | Diagrams, Mermaid | Read `references/12-diagrams.md` |
-| Token cost, RTK, caching | Read `references/13-token-cost.md` |
+| Token cost, RTK, caching, TOON format | Read `references/13-token-cost.md` |
 | Supabase, RLS, Resend | Read `references/14-supabase-resend.md` |
-| Tests, QA, k6, coverage | Read `references/15-qa-testing.md` |
+| Tests, QA, k6, coverage, PICT combinatorics | Read `references/15-qa-testing.md` |
 | Monorepo, Turborepo, pnpm | Read `references/16-monorepo.md` |
 | ISO 27001, SOC2, GDPR | Read `references/17-compliance.md` |
 | CRO, copy, conversion | Read `references/18-marketing-growth.md` |
@@ -105,7 +103,10 @@ Available: `craft` `shape` `teach` `document` `extract` `critique` `audit` `poli
 `bento` `minimalist` `copy` `cro` `growth` `launch` `squad design` `squad system`
 `squad handoff` `intel` `intel system` `intel stack`
 
-**For strategic decisions:** Read `references/intelligence/0{N}-{name}.md` for the relevant audit map.
+**For strategic & orchestration decisions:** Read references file by file under `references/intelligence/`:
+- `references/intelligence/02-orchestration-intelligence-graph.md` (multi-agent orchestration)
+- `references/intelligence/07-workflow-intelligence-map.md` (SOPs, cleanup-all pipeline, skills find)
+- `references/intelligence/11-token-optimization-audit.md` (RTK optimization commands, TOON & terminal title)
 
 ---
 
@@ -237,6 +238,15 @@ When a subagent activates, it announces itself, reads the relevant reference fil
 | Trigger keywords | Agent | Reference to read |
 |-----------------|-------|-------------------|
 | Architecture, ADR, system design, DDD, CQRS | **ARCH AGENT** | `references/01-architecture.md` |
+| API design, route spec, OpenAPI 3.1 | **API DESIGNER** | `references/intelligence/02-orchestration-intelligence-graph.md` |
+| Fullstack dev, DB ↔ API ↔ UI | **FULLSTACK DEV** | `references/intelligence/02-orchestration-intelligence-graph.md` |
+| Golden path, platform portal, Backstage | **PLATFORM ENG** | `references/03-infrastructure.md` |
+| Workload deploy, manifest dry-run, Helm | **K8S SPECIALIST** | `references/03-infrastructure.md` |
+| Dynamic pentest, offensive security PoC | **PENTESTER** | `references/07-security.md` |
+| Fine-tuning, Bedrock Agent, vector index | **LLM ARCHITECT** | `references/10-ai-agents.md` |
+| Market research, competitor SWOT | **COMPETITIVE ANALYST** | `references/intelligence/02-orchestration-intelligence-graph.md` |
+| Multi-agent topology, coordination, deadlocks | **COORDINATOR** | `references/intelligence/02-orchestration-intelligence-graph.md` |
+| Stateful transaction workflows, Saga rollback | **ORCHESTRATOR** | `references/intelligence/02-orchestration-intelligence-graph.md` |
 | Security, CORS, RBAC, pentest, OWASP, secrets | **SECURITY AGENT** | `references/07-security.md` |
 | Frontend, React, Next.js, UI, component, CSS | **FRONTEND AGENT** | `references/04-frontend.md` |
 | Mobile, React Native, Expo, iOS, Android | **MOBILE AGENT** | `references/06-mobile.md` |

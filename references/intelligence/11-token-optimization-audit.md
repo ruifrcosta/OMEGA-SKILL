@@ -50,3 +50,54 @@ When inspecting large files:
 - **Banned**: Loading entire files exceeding 1000 lines.
 - **Allowed**: Use `rtk read <file>` or `view_file` specifying exact `StartLine` and `EndLine` parameters to extract the target functions.
 - **Summary**: Keep long data payloads out of the prompt. Compress telemetry datasets into high-fidelity markdown tables before shipping to subagents.
+
+---
+
+## 5. TOON Array Optimization Format {#toon-format}
+> Distilled from `claude-starter/Codex-starter`
+
+To save 30-50% on token consumption for large arrays of structured JSON (such as file lists, API route mappings, database logs, and model registries), OMEGA utilizes the **TOON (Token-Optimized Object Notation)** compact serialization format.
+
+### Serialization Example:
+- **Standard JSON (120 tokens)**:
+```json
+[
+  {"method": "GET", "path": "/api/users", "auth": "required"},
+  {"method": "POST", "path": "/api/users", "auth": "required"},
+  {"method": "GET", "path": "/api/health", "auth": "none"}
+]
+```
+- **TOON Format (70 tokens — 40%+ savings)**:
+```
+[3]{method,path,auth}:
+GET,/api/users,required
+POST,/api/users,required
+GET,/api/health,none
+```
+
+### TOON Encoding/Decoding Commands:
+- `/analyze-tokens` - Analyze current conversation for token-heavy JSON blocks.
+- `/convert-to-toon` - Convert raw JSON block at clipboard or prompt to TOON.
+- `/toon-encode` / `/toon-decode` - Programmatic translation on file contents.
+- `/toon-validate` - Perform syntax verification on TOON structures.
+
+---
+
+## 6. Dynamic Terminal State Window Title Auto-Update {#terminal-title}
+> Distilled from `bluzername/claude-code-terminal-title.git`
+
+In multi-terminal or multi-session workflows (such as parallel multi-agent orchestration), OMEGA auto-updates the terminal title to reflect the current active task state. This prevents context confusion for both the human developer and automated orchestration agents.
+
+### ANSI Escape Output Protocol
+Each time a major task or phase starts, emit the ANSI title escape code:
+```bash
+# macOS/Linux standard terminals:
+echo -ne "\033]0;[Folder] | [Task-Verb: Target]\007"
+```
+
+### Task Verb Classification:
+- **`Debug: [API/DB]`**: For active diagnostics or log traces.
+- **`Build: [Feature]`**: For writing active component code.
+- **`Test: [Suite]`**: For running unit/E2E test pipelines.
+- **`Fix: [Issue]`**: For applying refactors or security hardening.
+- **`Deploy: [Env]`**: For infrastructure provisioning and migrations.

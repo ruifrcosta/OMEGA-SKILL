@@ -374,3 +374,122 @@ Dynamic type:      Text scales without truncation up to 2× system size
 - Decorative images use `alt=""`
 - Forms: every input has a visible `<label>`, not just placeholder
 - Error messages use `role="alert"` or `aria-live="polite"`
+
+---
+
+## 8. Design Token Generator — OKLCH System {#oklch-tokens}
+> Distilled from `dylantarre/design-system-skills`
+
+### OKLCH — Modern Perceptually Uniform Color Space
+OKLCH is the default for new projects. It ensures perceptually uniform lightness steps that traditional HSL/RGB cannot guarantee.
+
+```css
+/* 11-Step color scale (50-950) using OKLCH */
+:root {
+  --color-primary-50:  oklch(96% 0.04 250);
+  --color-primary-100: oklch(92% 0.07 250);
+  --color-primary-200: oklch(85% 0.11 250);
+  --color-primary-300: oklch(76% 0.14 250);
+  --color-primary-400: oklch(67% 0.16 250);
+  --color-primary-500: oklch(57% 0.17 250);  /* base */
+  --color-primary-600: oklch(48% 0.16 250);
+  --color-primary-700: oklch(40% 0.14 250);
+  --color-primary-800: oklch(32% 0.11 250);
+  --color-primary-900: oklch(23% 0.07 250);
+  --color-primary-950: oklch(15% 0.04 250);
+}
+```
+
+### Semantic Token Auto-Generation
+Auto-generate harmonized semantic colors from brand hue:
+| Semantic | Hue Offset from Brand | Example (Brand=250°) |
+|---|---|---|
+| Success | 145° | oklch(57% 0.17 145) |
+| Warning | 70° | oklch(57% 0.17 70) |
+| Error | 25° | oklch(57% 0.17 25) |
+| Info | 250° (same) | oklch(57% 0.17 250) |
+
+### Chroma Reduction at Extremes
+- Lightness > 0.9 → reduce chroma by 30%
+- Lightness < 0.2 → reduce chroma by 70%
+
+### Output Formats (ask user before generating)
+```
+1. CSS Custom Properties   → :root { --color-*: oklch(...) }
+2. Tailwind Config         → colors: { primary: { 50: 'oklch(...)' } }
+3. JSON Design Tokens      → { "color": { "primary": { "50": { "value": "..." } } } }
+```
+
+### Spacing Scale — T-shirt vs Numeric
+```css
+/* T-shirt naming (simple projects) */
+:root {
+  --space-xs: 4px;   --space-sm: 8px;   --space-md: 16px;
+  --space-lg: 24px;  --space-xl: 32px;  --space-2xl: 48px;
+}
+/* Numeric naming (design systems) */
+:root {
+  --space-100: 4px;  --space-200: 8px;  --space-300: 12px;
+  --space-400: 16px; --space-500: 24px; --space-600: 32px;
+  --space-700: 48px; --space-800: 64px;
+}
+```
+
+---
+
+## 9. UI/UX Consultation — Style-Neutral Framework {#uiux-framework}
+> Distilled from `oil-oil/ui-ux-guide`
+
+### Two-Layer Architecture (NEVER merge these)
+- **Layer 1 — UX Hard Rules**: Universal across ALL style families
+- **Layer 2 — Style Lens**: Per-project, user-selected, never imposed
+
+### UX Hard Rules (Apply to Every Project)
+1. **Task-first hierarchy** — CTA identifiable in < 3 seconds
+2. **5 states mandatory** — loading · empty · error · success · permission-denied
+3. **Affordance + signifier** — clickable looks clickable; constraints shown before submit
+4. **Error prevention + recoverability** — prevent first, recover gracefully
+5. **Feedback loop closure** — did it work? what changed? what's next?
+6. **Consistency** — same interaction = same component + wording + placement
+7. **CRAP visual hierarchy** — Contrast / Repetition / Alignment / Proximity
+8. **Spacing scale discipline** — pick ONE scale; off-scale values need explicit justification
+9. **Help text layering L0–L3** — label → placeholder → hint → error
+10. **UI copy discipline** — from user tasks / system state, never AI meta-text
+
+### 8 Style Families (Never default-imposed)
+```
+modern-minimal    editorial    brutal       playful
+premium-luxury    tech-cyberpunk   warm-content   brand-driven
+```
+
+### Project Stage Classifier (Run Before First Question)
+| Stage | Signals | Opening Direction |
+|---|---|---|
+| Blank | No files / only setup | Design from scratch |
+| Half-done | Components but no design spec | Establish tokens first |
+| Mature | Has design-spec.md | Review + iterate |
+| Legacy | Inconsistent old patterns | Audit + modernize |
+| Uncertain | Mixed signals | Stage 1: scan + classify |
+
+### Phase 0 Rule: Scan Before Asking
+```
+BEFORE asking ANY question:
+1. Check tailwind.config.js — extract existing tokens
+2. Check package.json — identify component library (shadcn, MUI, Radix...)
+3. Check existing design-spec.md — don't re-derive what's already decided
+4. THEN ask only what you don't know
+```
+
+### Review Mode — P0/P1/P2 Triage
+```
+P0 (Critical)   — Violates UX Hard Rule; blocks task completion
+P1 (Important)  — Degrades experience; high fix priority
+P2 (Polish)     — Consistency issue; low priority
+```
+Each finding: [Severity] HCI Law: [law name] — Issue: [description] — Fix: [proposal]
+
+### One-Question Protocol
+- Ask one question at a time
+- Always provide a default the user can accept silently
+- No starred (★) recommendations unless user explicitly asks
+

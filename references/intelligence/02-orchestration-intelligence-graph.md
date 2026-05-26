@@ -104,3 +104,12 @@ The OMEGA multi-agent engine coordinates work through sequential gating stages a
 | **Security Agent** | `omega-security` | RBAC setup, CSP/CORS changes, secrets handling | Threat Models, Compliance checklists| Bypassing gates |
 | **Token Optim. Agent**| `omega-token` | High context usage, before terminal execution | RTK command recommendations | Ignoring cost constraints|
 | **Cost Optim. Agent** | `omega-cost` | Infrastructure configurations, database schema | AWS/Vercel sizing recommendations | Compromising performance |
+| **API Designer** | `omega-api-designer` | New API surface, major route shifts, endpoints design | OpenAPI 3.1 specifications, Postman collections | Implementing routes code |
+| **Fullstack Dev** | `omega-fullstack` | Cross-layer features spanning DB ↔ API ↔ UI | Fully implemented, type-safe integrated routes | Altering cluster infra |
+| **Platform Engineer** | `omega-platform` | Golden path templates, developer portals, toolchain | Service catalog files, template generators | Direct application support |
+| **K8s Specialist** | `omega-k8s` | Workload deployment, manifest tuning, ingress/mesh | Hardened YAML configurations, Helm, Kustomize | Disregarding resource quotas |
+| **Pentester** | `omega-pentester` | Active API/Cloud dynamic security verification | Validated exploit PoCs, risk remediation roadmap | Writing code to target systems |
+| **LLM Architect** | `omega-llm-arch` | LoRA/QLoRA tuning, RAG pipeline, inference optimization | Embedding models configurations, token cost maps | Neglecting latency constraints |
+| **Competitive Analyst**| `omega-analyst` | Market research, benchmarking, feature requirements | SWOT matrix, product comparison reports | Committing source files |
+| **Agent Coordinator** | `omega-coordinator` | Spawning and managing multiple subagents, deadlock check | Dependency topology maps, message routing | Direct task execution |
+| **Workflow Orchestrator**| `omega-orchestrator` | Long-running business processes, ACID/Saga rollbacks | Stateful transaction logs, approval checklists | Direct file mutation |
