@@ -126,3 +126,126 @@ Our code pipelines require target boundaries before shipping code blocks to envi
 *   **Coverage Target**: Minimum **85%** statement and branch coverage on critical business contexts.
 *   **Regression Audits**: Any resolved bug requires a matching regression test reproducing the error condition before release approval.
 *   **Boundary Contracts**: Always mock external network boundaries (payment gateways, notification endpoints) during Unit tests to guarantee hermetic run isolation.
+
+---
+
+## 5. Contract Testing {#contract-testing}
+
+```typescript
+// Pact — consumer-driven contract tests
+// Consumer defines what it expects from the provider
+// Provider verifies it can satisfy all consumers
+
+// Consumer test (frontend expecting this API shape)
+import { PactV3 } from '@pact-foundation/pact';
+
+const provider = new PactV3({
+  consumer: 'web-frontend',
+  provider: 'orders-api',
+});
+
+describe('Orders API contract', () => {
+  it('returns order list in expected shape', async () => {
+    await provider
+      .given('user has orders')
+      .uponReceiving('GET /v1/orders')
+      .withRequest({ method: 'GET', path: '/v1/orders' })
+      .willRespondWith({
+        status: 200,
+        body: {
+          orders: eachLike({
+            id: string('ord_123'),
+            status: string('pending'),
+            total_cents: integer(4999),
+          }),
+        },
+      })
+      .executeTest(async (mockServer) => {
+        const res = await fetch(`${mockServer.url}/v1/orders`);
+        expect(res.status).toBe(200);
+      });
+  });
+});
+```
+
+## 6. CI/CD Quality Gates {#ci-gates}
+
+```yaml
+# .github/workflows/quality.yml
+name: Quality Gates
+on: [push, pull_request]
+
+jobs:
+  gates:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Type check
+        run: rtk pnpm tsc --noEmit
+        # GATE: zero TypeScript errors
+
+      - name: Lint
+        run: rtk pnpm biome check .
+        # GATE: zero lint errors
+
+      - name: Unit tests + coverage
+        run: rtk pnpm vitest run --coverage
+        # GATE: coverage >= 80%
+
+      - name: Coverage threshold check
+        run: |
+          COVERAGE=$(cat coverage/coverage-summary.json | jq '.total.statements.pct')
+          if (( $(echo "$COVERAGE < 80" | bc -l) )); then
+            echo "Coverage ${COVERAGE}% below 80% threshold"
+            exit 1
+          fi
+
+      - name: E2E tests
+        run: rtk pnpm playwright test
+        # GATE: all critical journeys pass
+
+      - name: Security audit
+        run: pnpm audit --audit-level=critical
+        # GATE: zero critical vulnerabilities
+
+      - name: Build
+        run: rtk pnpm build
+        # GATE: production build succeeds
+        # GATE: bundle size < 150kb initial
+
+  load-test:
+    needs: gates
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Load test staging
+        run: rtk k6 run --out json=results.json tests/load/api-stress.js
+        env:
+          BASE_URL: https://staging.yourdomain.com
+        # GATE: p95 < 200ms, error rate < 1%
+```
+
+## 7. Snapshot & Visual Regression {#snapshots}
+
+```typescript
+// Vitest snapshots for API responses
+it('order response matches snapshot', async () => {
+  const response = await request(app).get('/v1/orders/ord_123');
+  expect(response.body).toMatchInlineSnapshot(`
+    {
+      "id": "ord_123",
+      "status": "pending",
+      "items": [...],
+      "total_cents": 4999,
+    }
+  `);
+});
+
+// Playwright visual regression
+test('checkout page renders correctly', async ({ page }) => {
+  await page.goto('/checkout');
+  await expect(page).toHaveScreenshot('checkout-desktop.png', {
+    maxDiffPixels: 100,  // allow minor rendering differences
+  });
+});
+```

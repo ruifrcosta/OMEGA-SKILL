@@ -142,3 +142,105 @@ We separate transactional storage (PostgreSQL) from analytical data storage (Big
 *   **BigQuery**: Used for high-throughput, low-cost analytical ad-hoc querying directly from raw event streams.
 *   **Snowflake**: Standard for multi-party governed data storage, business intelligence dashboards, and cross-organization financial auditing.
 *   **Partitioning Constraints**: Every analytical table containing log or timestamp information must enforce partition filters to prevent wasteful full-table scans.
+
+---
+
+## 5. Drizzle ORM — Production Patterns {#drizzle}
+
+```typescript
+// schema/orders.ts
+import { pgTable, uuid, text, integer, timestamp, index } from 'drizzle-orm/pg-core';
+
+export const orders = pgTable('orders', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  userId: uuid('user_id').notNull().references(() => users.id),
+  status: text('status', { enum: ['pending', 'confirmed', 'shipped', 'delivered'] }).notNull(),
+  totalCents: integer('total_cents').notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+}, (table) => ({
+  // Composite index: equality first (user_id), then range/sort (created_at)
+  userIdCreatedAtIdx: index('idx_orders_user_created').on(table.userId, table.createdAt),
+  // Partial index for pending orders — only indexes the rows we query most
+  pendingIdx: index('idx_orders_pending').on(table.userId).where(sql`status = 'pending'`),
+}));
+
+// Cursor pagination (never OFFSET)
+async function getOrdersPage(userId: string, cursor?: string, limit = 20) {
+  return db.select()
+    .from(orders)
+    .where(
+      cursor
+        ? and(eq(orders.userId, userId), gt(orders.id, cursor))
+        : eq(orders.userId, userId)
+    )
+    .orderBy(orders.id)
+    .limit(limit);
+}
+
+// Transactions — use for multi-table mutations
+async function createOrderWithItems(data: CreateOrderDto) {
+  return db.transaction(async (tx) => {
+    const [order] = await tx.insert(orders).values({
+      userId: data.userId,
+      totalCents: data.totalCents,
+      status: 'pending',
+    }).returning();
+
+    await tx.insert(orderItems).values(
+      data.items.map(item => ({ orderId: order.id, ...item }))
+    );
+
+    return order;
+  });
+}
+```
+
+## 6. Vector Search with pgvector (Supabase) {#pgvector}
+
+```sql
+-- Enable pgvector extension (once per project)
+create extension if not exists vector;
+
+-- Table with embedding column
+create table knowledge_base (
+  id uuid primary key default gen_random_uuid(),
+  content text not null,
+  embedding vector(1536),  -- OpenAI text-embedding-3-small dimensions
+  metadata jsonb,
+  created_at timestamp default now()
+);
+
+-- HNSW index for fast approximate nearest-neighbor search
+create index on knowledge_base
+  using hnsw (embedding vector_cosine_ops)
+  with (m = 16, ef_construction = 64);
+```
+
+```typescript
+// Hybrid search: vector + full-text (BM25) combined via RRF
+async function hybridSearch(query: string, limit: number = 5) {
+  const embedding = await generateEmbedding(query); // your embedding call
+
+  const { data } = await supabase.rpc('hybrid_search', {
+    query_text: query,
+    query_embedding: embedding,
+    match_count: limit,
+  });
+
+  return data;
+}
+
+// SQL function for hybrid search with Reciprocal Rank Fusion
+// CREATE OR REPLACE FUNCTION hybrid_search(query_text text, query_embedding vector, match_count int)
+// RETURNS TABLE(id uuid, content text, score float) AS $$
+//   SELECT id, content,
+//     (1.0 / (60 + vector_rank)) + (1.0 / (60 + fts_rank)) as score
+//   FROM (
+//     SELECT id, content,
+//       row_number() OVER (ORDER BY embedding <=> query_embedding) as vector_rank,
+//       row_number() OVER (ORDER BY ts_rank(to_tsvector(content), plainto_tsquery(query_text)) DESC) as fts_rank
+//     FROM knowledge_base
+//   ) combined
+//   ORDER BY score DESC LIMIT match_count;
+// $$ LANGUAGE SQL STABLE;
+```

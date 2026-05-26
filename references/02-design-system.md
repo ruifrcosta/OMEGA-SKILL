@@ -1,178 +1,118 @@
 # Design System Reference
 
 ## Table of Contents
-1. [Claude-Style UI Philosophy](#philosophy)
-2. [Design Tokens & Theme Scales](#tokens)
-3. [Typography & Readability](#typography)
-4. [Component Library Primitives](#components)
-5. [Tailwind & CSS Configuration](#tailwind)
-6. [Motion & Animation Standards](#motion)
-7. [Accessibility & Testing](#accessibility)
+1. [Visual Silence Philosophy](#philosophy)
+2. [Design Tokens — Semantic System](#tokens)
+3. [Typography — The Primary Visual Element](#typography)
+4. [Component Standards](#components)
+5. [Motion & Animation Rules](#motion)
+6. [Accessibility — WCAG AA Minimum](#accessibility)
+7. [HTML Generation Standards](#html)
 
 ---
 
-## 1. Claude-Style UI Philosophy {#philosophy}
+## 1. Visual Silence Philosophy {#philosophy}
 
-The OMEGA TITAN design language is inspired by Anthropic's Claude, Linear, and Vercel. It prioritizes cognitive clarity, minimal distraction, and structural refinement over loud visual embellishments.
+The OMEGA design language is inspired by Claude, Linear, Notion, and Vercel.
+Cognitive clarity over visual noise. Structural refinement over decoration.
 
-### Key Principles
+**Core principles:**
+- **No cards.** Content lives directly on the surface. Organisation via spacing, not containers.
+- **No shadows.** Never `box-shadow`, `drop-shadow`, or `elevation`. Hierarchy via typography + whitespace.
+- **No AI slop fonts.** Never Inter, Roboto, or Arial as primary on premium surfaces.
+- **4/8dp grid.** Always. Every spacing value is a multiple of 4.
+- **Semantic tokens.** Raw hex values never appear in component code.
 
-*   **Restrained Elevation**: Avoid deep shadow cascades. Use subtle, sharp border strokes (`1px border-neutral-200` or `dark:border-neutral-800`) to delineate hierarchy.
-*   **Tactile Feedback**: Interactive elements should feel physically satisfying through subtle hover scale transforms and custom micro-animations.
-*   **Soft Neutral Palettes**: Use high-grade warm/cool grays rather than pure black and white to minimize eye strain.
-*   **Conversational Focus**: Layouts are centered around communication and prompt-driven user flows, leaving maximum real estate for content and logs.
+**Hard bans:**
+- `transition: all` → specify exact properties + duration
+- `scale(0)` entrance → always `scale(0.95) + opacity: 0`
+- `ease-in` on UI → always `cubic-bezier(0.23, 1, 0.32, 1)`
+- Nested card grids · glassmorphism · neon gradients · side-stripe borders
+- Copy: "Elevate" "Seamless" "Unleash" "Next-Gen" "Game-changer" em dashes (—)
 
 ---
 
-## 2. Design Tokens & Theme Scales {#tokens}
+## 2. Design Tokens — Semantic System {#tokens}
 
-Use these precise HSL values in all web interfaces to achieve a premium, unified theme.
+### Universal Semantic Token Map
 
 ```css
 :root {
-  /* Neutrals */
-  --bg-primary: hsl(20, 20%, 98%);     /* Warm Cream */
-  --bg-secondary: hsl(20, 15%, 95%);
-  --border-subtle: hsl(20, 10%, 88%);
-  --text-primary: hsl(20, 30%, 12%);
-  --text-secondary: hsl(20, 15%, 45%);
-  
-  /* Accents */
-  --accent-primary: hsl(24, 90%, 48%);  /* Clay Orange */
-  --accent-hover: hsl(24, 95%, 42%);
-  --accent-focus: hsl(24, 95%, 42%, 0.15);
-  
-  /* Shadows */
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+  /* Surfaces */
+  --bg:        #ffffff;              /* primary surface */
+  --bg-subtle: #fafafa;              /* secondary surface */
+
+  /* Text */
+  --fg:        #0f172a;              /* primary text */
+  --muted:     #64748b;              /* secondary / captions */
+
+  /* Brand */
+  --accent:    [category-specific]; /* see brand table below */
+  --accent-hover: [accent darkened 6%];
+
+  /* Structure */
+  --border:    rgba(15,23,42,0.05); /* near-invisible */
+  --radius:    0.5rem;              /* 8px base, scale up as needed */
+
+  /* Feedback */
+  --error:     #dc2626;
+  --success:   #16a34a;
+  --warning:   #d97706;
+
+  /* Motion */
+  --ease-out:    cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in:     cubic-bezier(0.55, 0, 1, 0.45);
+  --ease-inout:  cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
 }
 
 .dark {
-  /* Neutrals */
-  --bg-primary: hsl(220, 15%, 10%);    /* Dark Slate */
-  --bg-secondary: hsl(220, 12%, 14%);
-  --border-subtle: hsl(220, 10%, 20%);
-  --text-primary: hsl(220, 20%, 94%);
-  --text-secondary: hsl(220, 10%, 65%);
-  
-  /* Accents */
-  --accent-primary: hsl(24, 90%, 55%);  /* Brighter Clay Orange */
-  --accent-hover: hsl(24, 95%, 60%);
-  --accent-focus: hsl(24, 95%, 60%, 0.25);
+  --bg:        #0a0a0a;
+  --bg-subtle: #111111;
+  --fg:        #f5f5f5;
+  --muted:     #a3a3a3;
+  --border:    rgba(255,255,255,0.06);
 }
 ```
 
----
+### Brand Morphing Table (category → full palette)
 
-## 3. Typography & Readability {#typography}
+| Category | Heading Font | Body Font | Light Accent | Dark Accent |
+|----------|-------------|-----------|-------------|------------|
+| Healthcare | Figtree 600 | DM Sans 400 | `#059669` | `#34d399` |
+| Finance | Söhne 600 | IBM Plex Sans 400 | `#1d4ed8` | `#60a5fa` |
+| Productivity | Geist 600 | Geist 400 | `#7c3aed` | `#a78bfa` |
+| E-Commerce | Playfair Display 600 | Nunito 400 | `#0f0f0f` | `#fbbf24` |
+| Fitness | Space Grotesk 600 | DM Sans 400 | `#16a34a` | `#4ade80` |
+| Education | Lora 600 | Source Serif 4 400 | `#2563eb` | `#60a5fa` |
+| Social | Plus Jakarta Sans 600 | DM Sans 400 | `#7c3aed` | `#a78bfa` |
+| Travel | Playfair Display 600 | DM Sans 400 | `#c2410c` | `#fb923c` |
+| Developer | Geist 600 | Geist Mono 400 | `#0f172a` | `#f8fafc` |
 
-Use highly readable sans-serif and monospace typography for clean enterprise data representation.
-
-*   **Primary Font**: Inter or Outfit (fallbacks: System-UI, -apple-system, sans-serif)
-*   **Monospace Font**: JetBrains Mono or SF Mono (fallbacks: Consolas, monospace)
-
-### Hierarchy Table
-
-| Class | Font Size | Line Height | Letter Spacing | Ideal Use Case |
-|-------|-----------|-------------|----------------|----------------|
-| `text-xs` | `0.75rem` | `1rem` | `+0.01em` | Metadata, badges, table headers |
-| `text-sm` | `0.875rem` | `1.25rem` | `0` | Primary body, inputs, buttons |
-| `text-base` | `1rem` | `1.5rem` | `-0.011em` | Secondary titles, chat bubbles |
-| `text-lg` | `1.125rem` | `1.75rem` | `-0.018em` | Page subtitles, dialog headers |
-| `text-xl` | `1.25rem` | `1.875rem` | `-0.022em` | Section headings, card titles |
-| `text-3xl` | `1.875rem` | `2.25rem` | `-0.027em` | Main dashboard titles |
-
----
-
-## 4. Component Library Primitives {#components}
-
-Every layout must use semantic and accessibility-first structures.
-
-### AI Chat Layout Primitive
-```html
-<div class="flex h-screen flex-col bg-[var(--bg-primary)] text-[var(--text-primary)] font-sans antialiased">
-  <!-- Nav Bar -->
-  <header class="flex h-14 items-center justify-between border-b border-[var(--border-subtle)] px-6">
-    <div class="flex items-center gap-3">
-      <span class="h-6 w-6 rounded bg-[var(--accent-primary)]"></span>
-      <h1 class="text-sm font-semibold tracking-tight">OMEGA TITAN Workspace</h1>
-    </div>
-    <div class="flex items-center gap-2">
-      <button class="text-xs text-[var(--text-secondary)] hover:text-[var(--text-primary)]">System Health: 100%</button>
-    </div>
-  </header>
-
-  <!-- Main View -->
-  <main class="flex flex-1 overflow-hidden">
-    <!-- Sidebar -->
-    <aside class="w-64 border-r border-[var(--border-subtle)] bg-[var(--bg-secondary)] p-4 hidden md:block">
-      <nav class="space-y-1">
-        <a href="#" class="flex items-center gap-3 rounded-md px-3 py-2 text-sm bg-[var(--bg-primary)] text-[var(--text-primary)] shadow-sm font-medium">Dashboard</a>
-        <a href="#" class="flex items-center gap-3 rounded-md px-3 py-2 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-primary)] hover:text-[var(--text-primary)] transition-colors">Observability</a>
-      </nav>
-    </aside>
-
-    <!-- Chat Area -->
-    <section class="flex flex-1 flex-col overflow-y-auto">
-      <div class="flex-1 space-y-6 p-6 max-w-3xl mx-auto w-full">
-        <!-- AI Message -->
-        <div class="flex gap-4">
-          <div class="h-8 w-8 shrink-0 rounded-full bg-[var(--accent-primary)] flex items-center justify-center text-white text-xs font-semibold">Ω</div>
-          <div class="space-y-2">
-            <p class="text-sm font-medium">Omega Titan Engine</p>
-            <div class="text-sm text-[var(--text-primary)] leading-relaxed bg-[var(--bg-secondary)] rounded-2xl p-4 border border-[var(--border-subtle)]">
-              Welcome to OMEGA TITAN. All systems initialized and secure. Ready to orchestrate.
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Prompt Input Panel -->
-      <div class="border-t border-[var(--border-subtle)] p-4">
-        <div class="max-w-3xl mx-auto relative">
-          <textarea class="w-full min-h-[50px] max-h-[200px] bg-[var(--bg-secondary)] border border-[var(--border-subtle)] rounded-xl py-3 pl-4 pr-12 text-sm focus:outline-none focus:ring-1 focus:ring-[var(--accent-primary)] resize-none" placeholder="Ask anything..."></textarea>
-          <button class="absolute right-3 bottom-3 h-8 w-8 rounded-md bg-[var(--accent-primary)] hover:bg-[var(--accent-hover)] text-white flex items-center justify-center transition-colors">
-            &rarr;
-          </button>
-        </div>
-      </div>
-    </section>
-  </main>
-</div>
-```
-
----
-
-## 5. Tailwind & CSS Configuration {#tailwind}
-
-Add this system definition to `tailwind.config.js` to ensure tokens sync perfectly:
+### Tailwind Config (token-bridged)
 
 ```javascript
+// tailwind.config.js
 module.exports = {
   darkMode: 'class',
   theme: {
     extend: {
       colors: {
-        titan: {
-          bg: {
-            primary: 'var(--bg-primary)',
-            secondary: 'var(--bg-secondary)',
-          },
-          border: 'var(--border-subtle)',
-          accent: {
-            DEFAULT: 'var(--accent-primary)',
-            hover: 'var(--accent-hover)',
-          }
-        }
+        bg:      'var(--bg)',
+        'bg-subtle': 'var(--bg-subtle)',
+        fg:      'var(--fg)',
+        muted:   'var(--muted)',
+        accent:  'var(--accent)',
+        border:  'var(--border)',
+        error:   'var(--error)',
+        success: 'var(--success)',
       },
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
-        mono: ['JetBrains Mono', 'monospace'],
+        // override per project using brand table above
+        display: ['var(--font-display)', 'sans-serif'],
+        body:    ['var(--font-body)', 'sans-serif'],
+        mono:    ['var(--font-mono)', 'monospace'],
       },
-      boxShadow: {
-        sharp: 'var(--shadow-sm)',
-        medium: 'var(--shadow-md)',
-      }
     }
   }
 }
@@ -180,31 +120,257 @@ module.exports = {
 
 ---
 
-## 6. Motion & Animation Standards {#motion}
+## 3. Typography — The Primary Visual Element {#typography}
 
-Never use flashy bounce animations in enterprise dashboards. All transitions should follow standard ease-in-out curves with small durations to maximize UX responsiveness.
+Typography IS the hierarchy. It does the work shadows and cards do in lesser designs.
 
-### Framer Motion Constants
+### Type Scale
 
-```typescript
-export const springTight = {
-  type: "spring",
-  stiffness: 400,
-  damping: 30
-};
+| Role | Size | Weight | Line-height | Letter-spacing |
+|------|------|--------|-------------|---------------|
+| Display | 40px | 600 | 1.1 | -0.03em |
+| H1 | 32px | 600 | 1.15 | -0.03em |
+| H2 | 24px | 600 | 1.2 | -0.025em |
+| H3 | 18px | 600 | 1.3 | -0.02em |
+| Body | 16px | 400 | 1.6 | 0 |
+| Small | 14px | 400 | 1.5 | 0 |
+| Caption | 12px | 500 | 1.4 | 0.01em |
 
-export const transitionSmooth = {
-  ease: [0.16, 1, 0.3, 1], // Custom cubic-bezier
-  duration: 0.4
-};
+**Rules:**
+- Body minimum: 16px on mobile (prevents iOS auto-zoom)
+- Headings: always tight letter-spacing (`-0.02em` to `-0.03em`)
+- Body: never tighten letter-spacing
+- Tabular numbers: `font-variant-numeric: tabular-nums` for data, prices, timers
+- Fix widows: never leave one word on the last line of a heading
+
+---
+
+## 4. Component Standards {#components}
+
+Every component ships with ALL states defined. No exceptions.
+
+**Required states:** `default` · `hover` · `pressed` · `disabled` · `loading` · `error` · `empty` · `success`
+
+### Button System
+
+```tsx
+// Primary
+<button className="
+  h-11 px-5 rounded-full
+  bg-[var(--accent)] text-white font-medium text-sm
+  transition-transform duration-150 ease-[var(--ease-out)]
+  hover:opacity-90
+  active:scale-[0.97]
+  disabled:opacity-40 disabled:pointer-events-none
+">
+  Get started
+</button>
+
+// Secondary
+<button className="
+  h-11 px-5 rounded-full border border-[var(--border)]
+  bg-transparent text-[var(--fg)] font-medium text-sm
+  transition-transform duration-150 ease-[var(--ease-out)]
+  hover:bg-[var(--bg-subtle)]
+  active:scale-[0.97]
+">
+  Learn more
+</button>
+```
+
+### Input System (invisible, never enterprise-form style)
+
+```tsx
+<div className="space-y-1">
+  <label className="text-sm font-medium text-[var(--fg)]">
+    Email
+  </label>
+  <input
+    className="
+      w-full h-11 px-0
+      bg-transparent border-0 border-b border-[var(--border)]
+      text-[var(--fg)] text-sm
+      placeholder:text-[var(--muted)]
+      focus:outline-none focus:border-[var(--accent)]
+      transition-colors duration-150
+    "
+    type="email"
+    placeholder="you@company.com"
+  />
+  {error && (
+    <p className="text-xs text-[var(--error)]">{error}</p>
+  )}
+</div>
+```
+
+### List Items (never cards)
+
+```tsx
+// Content lives on the surface. Separator only.
+<div className="divide-y divide-[var(--border)]">
+  {items.map(item => (
+    <div key={item.id} className="
+      flex items-center justify-between py-4
+      transition-opacity duration-100
+      active:opacity-60
+    ">
+      <div>
+        <p className="text-sm font-medium text-[var(--fg)]">{item.title}</p>
+        <p className="text-xs text-[var(--muted)] mt-0.5">{item.subtitle}</p>
+      </div>
+      <span className="text-xs text-[var(--muted)]">{item.meta}</span>
+    </div>
+  ))}
+</div>
 ```
 
 ---
 
-## 7. Accessibility & Testing {#accessibility}
+## 5. Motion & Animation Rules {#motion}
 
-To obtain SOC 2 and ISO 9001 compliance, the design system must satisfy **WCAG 2.1 AA** color contrast and focus indicators:
+### Frequency Gate (run before any animation decision)
 
-1.  **Color Contrast**: Core text must exceed 4.5:1 contrast against backdrops (checked via playwright-axe tests).
-2.  **Focus States**: All interactive components must have clear focus indicator styles (`focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)] focus-visible:outline-none`).
-3.  **ARIA Labels**: Elements lacking visible text (e.g. icon-only buttons) must feature explicit `aria-label` properties.
+| Frequency | Decision |
+|-----------|----------|
+| 100+/day (keyboard shortcuts, command palette) | **No animation. Ever.** |
+| Tens/day (tab switches, list navigation) | Minimal or none |
+| Occasional (modals, sheets, drawers) | Standard 150–300ms |
+| Rare / first-time (onboarding, celebrations) | Can add delight |
+
+### Enforced Easing Curves
+
+```css
+/* NEVER use ease, ease-in, or linear for UI */
+--ease-out:    cubic-bezier(0.23, 1, 0.32, 1);   /* entering elements */
+--ease-in:     cubic-bezier(0.55, 0, 1, 0.45);   /* exiting elements */
+--ease-inout:  cubic-bezier(0.77, 0, 0.175, 1);  /* on-screen movement */
+--ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);   /* iOS-like sheets */
+```
+
+### Duration Scale
+
+| Element | Duration |
+|---------|---------|
+| Press feedback | 100–150ms |
+| Tooltip, small popover | 125–175ms |
+| Dropdown, select | 150–200ms |
+| Modal, drawer, sheet | 220–350ms |
+| Page transition | 200–300ms |
+
+### Entry Rules
+
+```css
+/* ALWAYS start from these values, never from scale(0) or opacity(0) alone */
+.entering {
+  transform: scale(0.95);
+  opacity: 0;
+}
+.entered {
+  transform: scale(1);
+  opacity: 1;
+  transition: transform 200ms var(--ease-out), opacity 200ms var(--ease-out);
+}
+```
+
+### Popover Origin (critical)
+
+```css
+/* Popovers scale from their trigger, never from center */
+.popover { transform-origin: var(--radix-popover-content-transform-origin); }
+.tooltip { transform-origin: var(--radix-tooltip-content-transform-origin); }
+/* Exception: modals use center because they're not anchored to a trigger */
+.modal { transform-origin: center; }
+```
+
+### Stagger (lists entering together)
+
+```css
+.item:nth-child(1) { animation-delay: 0ms; }
+.item:nth-child(2) { animation-delay: 40ms; }
+.item:nth-child(3) { animation-delay: 80ms; }
+.item:nth-child(4) { animation-delay: 120ms; }
+/* Max stagger: 40–60ms per item. Never block interaction during stagger. */
+```
+
+### Press Feedback (mandatory on every interactive element)
+
+```css
+.pressable {
+  transition: transform 150ms var(--ease-out);
+}
+.pressable:active {
+  transform: scale(0.97);
+}
+```
+
+---
+
+## 6. Accessibility — WCAG AA Minimum {#accessibility}
+
+```
+Text contrast:     ≥ 4.5:1 (normal), ≥ 3:1 (large text / UI elements)
+Focus indicators:  2px ring, accent color, always visible (never removed)
+Touch targets:     ≥ 44×44pt (iOS) / ≥ 48×48dp (Android)
+ARIA:              Every icon-only button has aria-label
+Keyboard:          Full tab navigation in visual order
+Motion:            prefers-reduced-motion respected always
+Dynamic type:      Text scales without truncation up to 2× system size
+```
+
+```css
+/* Focus ring — never remove, always style */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+```
+
+---
+
+## 7. HTML Generation Standards {#html}
+
+```html
+<!-- Semantic, accessible, SSR-compatible -->
+<!DOCTYPE html>
+<html lang="pt" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Preload critical fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+</head>
+<body class="h-full bg-[var(--bg)] text-[var(--fg)] antialiased">
+
+  <!-- Skip to content for keyboard users -->
+  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 z-50">
+    Skip to content
+  </a>
+
+  <main id="main" role="main" aria-label="Main content">
+    <section aria-labelledby="section-title">
+      <h2 id="section-title" class="text-xl font-semibold tracking-tight">...</h2>
+      <!-- Content with ARIA where meaningful images/icons exist -->
+    </section>
+  </main>
+
+</body>
+</html>
+```
+
+**Semantic rules:**
+- Every `<section>` has an `aria-labelledby` pointing to its heading
+- Icon-only buttons always have `aria-label="..."`
+- Meaningful images always have descriptive `alt="..."`
+- Decorative images use `alt=""`
+- Forms: every input has a visible `<label>`, not just placeholder
+- Error messages use `role="alert"` or `aria-live="polite"`

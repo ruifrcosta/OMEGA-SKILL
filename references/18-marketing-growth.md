@@ -108,3 +108,65 @@ Maintain a clean, premium brand voice across all touchpoints (mimicking Stripe a
 
 *   **Transparent Tiers**: Maintain exactly 3 transparent pricing tiers: **Free** (sandbox), **Pro** (per-seat with usage meters), and **Enterprise** (custom billing, high-security RBAC, mTLS, dedicated clusters).
 *   **Usage Metering**: Expose precise real-time cost indicators reflecting data transfer volumes, database requests count, and AI tokens consumed inside user dashboards.
+
+---
+
+## 6. Retention & Notification Psychology {#retention}
+
+**Timing rules (when to send, not just what):**
+
+| Moment | Right action |
+|--------|-------------|
+| First launch (session 1) | Zero friction. No paywall. No signup until value shown. |
+| End of first session | Show progress made. Preview what comes next. |
+| Day 2 notification | Reference the specific thing they did on day 1. |
+| After first positive outcome | Right moment for app store rating request. |
+| After 7 days | "Week in review" — make progress visible. |
+| After inactivity 3+ days | Reference what they'll lose/miss, not just "come back". |
+| At streak risk | Send within user's historically active time window. |
+
+**Notification content rules:**
+- Specific > generic: "Your dashboard had 3 new visitors" not "Check your dashboard"
+- Loss framing > gain framing for retention: "Your streak ends tonight" outperforms "Keep your streak"
+- Never: "We miss you" · "We thought you'd like to know" · "Just checking in"
+
+## 7. CTA Psychology Matrix {#cta-matrix}
+
+```
+Formula: [Action Verb] + [Specific Outcome] + [Optional Qualifier]
+
+BANNED CTAs:
+  "Submit" "Send" "Click here" "Learn more" "Sign up" "Get started"
+
+HIGH-CONVERTING CTAs by goal:
+  Acquisition:  "Get your free audit" / "Start building free" / "See it in 60 seconds"
+  Trial:        "Try free for 14 days" / "No credit card needed" / "Start free trial"
+  Purchase:     "Get lifetime access" / "Upgrade to Pro" / "Unlock all features"
+  Referral:     "Invite your team, get 3 months free" / "Share and earn $20 credit"
+  Re-engagement: "Pick up where you left off" / "Your report is ready" / "3 items need review"
+```
+
+## 8. Landing Page Conversion Order {#landing-order}
+
+Always build in this sequence — each step reduces bounce before the next CTA:
+
+```
+1. Hero — Value proposition (what you get, not what we do)
+         Above fold. No scroll required to understand.
+
+2. Social proof — Logos, numbers, or quotes (immediately below hero)
+                  "Trusted by 10,000 engineers" > "Enterprise-grade"
+
+3. Problem statement — Agitate the pain before showing the solution
+                       Makes solution feel more valuable
+
+4. Solution — Show, don't tell. Screenshots, demos, or specific outcomes.
+
+5. Objection handling — Address the 3 most common reasons not to buy
+                        "What if it doesn't work for my team?" → answer it
+
+6. Pricing — Clear tiers, one recommended option highlighted
+             Remove risk: free trial, money-back guarantee
+
+7. Final CTA — Repeat the primary CTA with urgency or scarcity if honest
+```
