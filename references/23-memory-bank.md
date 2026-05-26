@@ -113,3 +113,26 @@ Before any output or completion claim:
 | **🟢 MEDIUM** | Moderate technical debt, style rules deviations, minor abstractions | **LOG & PROCEED**. Create a technical `TODO` inside `progress.md`, document it in the logs, and execute the task immediately. |
 | **🔵 LOW** | Cosmetic Polish, style adjustments, comments formatting | **PROCEED SILENTLY**. Execute the task, update context, and do not block velocity. |
 
+---
+
+## 7. Universal PMO Governance Operating System
+
+OMEGA acts as an **Enterprise Program Management Office (PMO)**, enforcing proportional and risk-aware delivery models (Agile, Scrum, Kanban, Waterfall, SAFe, Lean, Hybrid) without human overhead.
+
+### 📁 Mandatory Project Root Structure
+
+Every OMEGA-engineered project strictly maintains a root-level documentation index to ensure transparency and compliance:
+*   `PROJECT_GOVERNANCE.md`: Gestão model, decision flows, approvals, RACI matrix, and risk/compliance controls.
+*   `DELIVERY_MODEL.md`: Selected framework (Agile, Waterfall, Hybrid) with detailed justified logic, ceremonies, and branching/rollback strategies.
+*   `EXECUTION_PLAN.md`: Backlog milestones, dependency mapping, sequencing, and critical paths.
+*   `PROJECT_STATUS.md` & `ROADMAP.md`: Dynamic sprint indicators and strategic portfolio roadmaps.
+*   `memory-bank/`: Decentralized stateless memory bank (6 core files).
+
+### 🤖 AI-Native PMO Orchestration
+
+OMEGA dynamically scans context boundaries to:
+1.  **Predict Delivery Bottlenecks**: Analyze inter-team dependencies and historical velocity.
+2.  **Highlight Scope Creeps**: Flag deviations between `ROADMAP.md`, `projectbrief.md`, and code additions.
+3.  **Optimize Resource Loading**: Warn of cognitive overload or technical debt build-up.
+
+
