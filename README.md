@@ -5,122 +5,196 @@
 / /_/ / /  / / /___/ /  / / ___ |  / / / /_/ // // /  / /  
 \____/_/  /_/_____/_/  /_/_/  |_| /_/  \____/___/_/  /_/   
                                                            
-   AUTONOMOUS BIG TECH SOFTWARE FACTORY │ SKILL FORGE v2.0
+   SISTEMA OPERACIONAL DE ENGENHARIA AUTÓNOMA │ KERNEL v2.0
 ```
 
-# OMEGA — RELENTLESS ENGINEERING OS, IMPECCABLE DESIGN FORGE & PMO GOVERNANCE SYSTEM
+# OMEGA — SISTEMA OPERACIONAL DE ENGENHARIA DE SOFTWARE AUTÓNOMO, DESIGN IMPECAVEL & GOVERNANÇA PMO
 
-An Compromising, Autonomous, Big Tech-grade Software Factory, Permanent Organizational Memory, and **Universal Portfolio Delivery Governance System** designed to unify all development capabilities (Architecture, Frontend, Backend, Mobile, DevOps, Security, and AI) under strict Zero-Trust governance, adaptive delivery cadences (Hybrid, Agile, Waterfall, SAFe, Lean), and the **6-Core Memory Bank Standard**.
+O **OMEGA** é um motor de desenvolvimento, arquitetura, design visual e governança de portfólio de nível Big Tech (altamente inspirado na cultura e padrões da Stripe, Vercel, Linear e OpenAI). 
 
----
-
-## 🌐 LANGUAGE INDEX / SELECIONE O SEU IDIOMA
-
-- [🇵🇹 Português](#-português)
-- [🇺🇸 English](#-english)
+Ele unifica todas as capacidades sob um único modelo de **Governança Zero-Trust**, sincroniza o estado dinamicamente através do padrão de **6-Core Memory Bank** do espaço de trabalho e implementa um **Universal PMO Engine** para entregas e cadências proporcionais (Híbrido, Agile, Waterfall, SAFe, Lean).
 
 ---
 
-# 🇵🇹 PORTUGUÊS
+## 📂 ÍNDICE GERAL DO MANUAL
 
-O **OMEGA** é o único Sistema Operacional de Engenharia de Software Autônomo e de Governança de Portfólio de nível Big Tech (inspirado na cultura Stripe, Vercel e Linear). Ele unifica todas as capacidades de desenvolvimento sob um modelo estrito de governança Zero-Trust, memória persistente baseada no padrão **6-Core Memory Bank** no espaço de trabalho do projeto e um **Universal PMO Governance Engine** adaptativo.
+1. [Manual de Instalação e Atualização](#-manual-de-instalação-e-atualização)
+2. [Manual de Ativação (Prompts e Gatilhos)](#-manual-de-ativação-prompts-e-gatilhos)
+3. [Os Três Pilares da Engenharia OMEGA](#-os-três-pilares-da-engenharia-omega)
+4. [Catálogo Completo de Comandos (Impeccable Vocabulary)](#-catálogo-completo-de-comandos)
+5. [O Cofre PMO (Índice de 18 Arquivos Mandatórios)](#-o-cofre-pmo-índice-de-18-arquivos-mandatórios)
+6. [O Motor de Estética e Dials Visuais](#-o-motor-de-estética-e-dials-visuais)
 
-## 📦 Instalação Rápida (Recomendada)
+---
 
-Instale a skill instantaneamente no seu ambiente **Claude Code** ou **Antigravity** executando o seguinte comando `npx`:
+## 📦 MANUAL DE INSTALAÇÃO E ATUALIZAÇÃO
+
+O OMEGA pode ser instalado globalmente ou localmente em qualquer ambiente baseado em **Claude Code**, **Antigravity SDK** ou terminal CLI padrão.
+
+### 1. Instalação Automática (Recomendada)
+Para instalar o OMEGA instantaneamente a partir do ecossistema aberto de AI Skills, execute:
 
 ```bash
-npx skills add ruifrcosta/OMEGA-SKILL
+# Instalação global (registado no sistema e disponível para todos os projetos)
+npx skills add ruifrcosta/OMEGA-SKILL -g -y
+
+# Instalação local no diretório do projeto atual
+npx skills add ruifrcosta/OMEGA-SKILL -y
 ```
 
-### Método de Instalação Alternativo (Git):
+### 2. Instalação Manual (Git Fallback)
+Caso prefira instalar diretamente a partir do repositório fonte para fins de contribuição ou desenvolvimento offline:
+
 ```bash
-git clone https://github.com/ruifrcosta/OMEGA-SKILL.git ~/.gemini/config/skills/omega
+# Clone para a pasta de skills globais do Antigravity
+git clone https://github.com/ruifrcosta/OMEGA-SKILL.git ~/.gemini/config/skills/OMEGA-SKILL
+
+# Clone para a pasta de skills globais do Claude Code
+git clone https://github.com/ruifrcosta/OMEGA-SKILL.git ~/.claude/skills/OMEGA-SKILL
+```
+
+### 3. Manual de Atualização (Skills Update)
+Para garantir que a sua instância local ou global possui as últimas atualizações de segurança, novos comandos do Taste Engine e correções de governança:
+
+```bash
+# Verificar se existem atualizações disponíveis para as skills instaladas
+npx skills check
+
+# Atualizar todas as skills para a versão mais recente
+npx skills update
+
+# Para forçar a reinstalação e atualização manual de uma skill específica
+npx skills add ruifrcosta/OMEGA-SKILL --force
 ```
 
 ---
 
-## 🚀 Os 3 Pilares do OMEGA Engine
+## 🚀 MANUAL DE ATIVAÇÃO (PROMPTS E GATILHOS)
 
-### 🏛️ 1. Engine de Governança Crítica (Anti-Drift & Anti-Loop)
-O OMEGA atua como seu engenheiro principal, arquiteto e auditor. Sempre que um sistema é desenhado ou atualizado, ele ativa o **Critical Engineering Review Mode**:
-- **Diagnóstico Profundo**: Analisa simplificações, acoplamentos invisíveis, complexidades artificiais e ROIs de refatoração.
-- **Portões de Severidade**:
-  - **🔴 CRITICAL**: Bloqueia a execução imediatamente se houver risco de segurança ou quebra grave de arquitetura.
-  - **🟡 HIGH**: Alerta e propõe uma solução opinada com confirmação rápida.
-  - **🟢 MEDIUM**: Cria um `TODO` técnico e registra no `progress.md` sem bloquear o fluxo.
-  - **🔵 LOW**: Executa silenciosamente e avança.
+O OMEGA entra em execução de forma autónoma através de palavras-chave, ou pode ser convocado explicitamente utilizando prompts de engenharia principal ou comandos da CLI.
 
-### 🏢 2. Universal PMO Governance Operating System
-Um motor híbrido de gestão e orquestração de entregas para **Hybrid, Agile, Waterfall, SAFe, Lean e AI-native PMO**.
-- **Diretiva PMO Adaptativa**: Detecta automaticamente a stack do projeto, maturidade técnica, compliance, riscos e cadências.
-- **Basta de Burocracia**: Elimina templates redundantes, aprovações infinitas e documentações teatrais, aplicando governança proporcional e orientada a valor real.
-- **AI-Native PMO**: Previsão de gargalos operacionais, scope creeps e sobrecarga de recursos em tempo real.
+### A. Gatilhos de Ativação Rápida
+O assistente ativará o OMEGA ao detetar qualquer um destes termos nas suas solicitações:
+*   *Arquitetura*: "Desenhar ADR", "mapear bounded contexts", "aplicar CQRS", "blueprints do sistema".
+*   *UI/UX*: "Interface minimalista", "escala OKLCH", "polir interface", "estética Stripe/Vercel", "Bento Grid".
+*   *Governança/PMO*: "Definir modelo de delivery", "criar RACI", "esboçar execution plan", "mapear dependências".
+*   *Segurança*: "Auditar CORS", "aplicar Zero Trust", "checklist OWASP", "criptografar senhas".
 
-### 📂 3. Estrutura Obrigatória de Raiz do Projeto
-OMEGA garante que todo projeto sob sua governança mantenha uma estrutura clara de 18 arquivos indexados no diretório raiz do espaço de trabalho:
+---
 
+### B. Prompts Prontos para Ativar a Skill
+
+#### 🟢 Prompt 1: Scaffolding de Novo Projeto (Modelo PMO Híbrido)
+> *"Usa a skill OMEGA para inicializar a estrutura PMO completa do meu projeto. Deteta a minha stack e cria os 18 arquivos mandatórios de raiz (PROJECT_GOVERNANCE, DELIVERY_MODEL, etc.) aplicando governança baseada em risco."*
+
+#### 🔵 Prompt 2: Engenharia Frontend (Taste Engine & OKLCH)
+> *"Usa a skill OMEGA para desenhar uma dashboard de produto. Aplica o Taste Engine com dials (Variance: 3, Motion: 5, Density: 4). Garanta contraste absoluto usando cores OKLCH e respeite a regra 'Sem Cartões'."*
+
+#### 🔴 Prompt 3: Auditoria Crítica de Arquitetura e Segurança
+> *"OMEGA, entra em Critical Engineering Review Mode. Faz uma auditoria completa na minha API e banco de dados. Quero portões de severidade ativados e validação contra o OWASP Top 10."*
+
+#### 🟡 Prompt 4: Sincronismo e Alinhamento de Memória
+> *"Usa a skill OMEGA para atualizar o Memory Bank. Executa o drift detection comparando a implementação atual do código com os ficheiros activeContext.md e progress.md."*
+
+---
+
+## 🏛️ OS TRÊS PILARES DA ENGENHARIA OMEGA
+
+### 🚦 Pilar I — Governança Crítica (Review Mode & Gates)
+Sempre que uma arquitetura ou stack é definida, o OMEGA ativa o **Critical Engineering Review Mode**:
+1.  **Diagnóstico Interno**: Avalia se a arquitetura proposta suporta escala 10x e detecta complexidades artificiais ou teatralidades de microsserviços.
+2.  **Portões de Decisão (Severity Gates)**:
+    *   **🔴 CRITICAL** (Falha de segurança, quebra de DDD ou risco de perda de dados): **Bloqueia a execução** imediatamente, relata o problema e exige correção de design.
+    *   **🟡 HIGH** (Subotimização sob carga ou workarounds complexos): **Alerta e propõe** uma solução de engenharia opinada e aguarda confirmação rápida.
+    *   **🟢 MEDIUM** (Débito técnico controlável): **Gera um TODO** no arquivo de progresso e continua a execução.
+    *   **🔵 LOW** (Melhoria cosmética ou de comentários): **Avança silenciosamente**.
+
+### 🏢 Pilar II — Universal PMO Governance Operating System
+Gerenciamento de entregas de nível corporativo adaptado para múltiplos frameworks:
+*   **Maturidade e Risco**: O OMEGA ajusta a densidade documental e o controlo com base na criticidade e regulamentação (Waterfall para alta conformidade, Agile para descoberta contínua, Hybrid para transição de legados).
+*   **AI-Native PMO**: Varreduras inteligentes para prever gargalos de entrega, scope creep e fadiga cognitiva de equipes antes de virar um incidente.
+
+### 🧠 Pilar III — Decoupled 6-Core Memory Bank
+Para garantir persistência em sessões stateless, o OMEGA descentraliza a memória da skill e a armazena diretamente no repositório de trabalho do usuário (`memory-bank/`):
+1.  `projectbrief.md` — Requisitos fundamentais e escopo.
+2.  `productContext.md` — O porquê e as metas de experiência do utilizador.
+3.  `systemPatterns.md` — Blueprints e padrões de arquitetura (DDD, CQRS).
+4.  `techContext.md` — Stack, infraestrutura, versões e limitações do ambiente.
+5.  `activeContext.md` — Foco do sprint atual, decisões e lições aprendidas.
+6.  `progress.md` — Status das tarefas (`[ ]` planeado, `[/]` em progresso, `[x]` concluído).
+
+---
+
+## 🛠️ CATÁLOGO COMPLETO DE COMANDOS (IMPECCABLE VOCABULARY)
+
+O OMEGA possui 23 comandos estáticos de refinamento visível e tomada de decisão:
+
+| Comando | Domínio | Raciocínio de Engenharia |
+|---|---|---|
+| **`craft [funcionalidade]`** | Construção | Planeia, desenha a UX e constrói a funcionalidade de ponta a ponta. |
+| **`shape [funcionalidade]`** | Arquitetura UI | Esboça o fluxo de tela e layouts baseados em espaçamento 4/8dp antes do código. |
+| **`critique [alvo]`** | Avaliação UX | Pontuação heurística de usabilidade e detecção de padrões genéricos. |
+| **`polish [alvo]`** | Refinamento | Ajustes finais em transições de micro-interações e alinhamento tipográfico. |
+| **`audit [alvo]`** | Qualidade | Varredura de acessibilidade (a11y), Core Web Vitals e conformidade estrutural. |
+| **`bolder [alvo]`** | Expressão | Adiciona contraste visual e pesos tipográficos a interfaces excessivamente neutras. |
+| **`quieter [alvo]`** | Contenção | Remove ruídos visuais, containers desnecessários e reduz a densidade da tela. |
+| **`distill [alvo]`** | Simplicidade | Remove complexidades de código, abstrações redundantes e loops prematuros. |
+| **`harden [alvo]`** | Robustez | Adiciona tratamento estrito de erros, internacionalização e testes de estresse. |
+| **`live`** | Live Server | Abre uma sessão em tempo real no navegador para testar variantes visuais. |
+
+---
+
+## 📂 O COFRE PMO: ÍNDICE DE 18 ARQUIVOS MANDATÓRIOS
+
+Os projetos sob a governança do OMEGA mantêm em sua raiz de trabalho a seguinte matriz de indexação de entrega e conformidade:
+
+| Arquivo | Função de Engenharia |
+|---|---|
+| **[PROJECT_GOVERNANCE.md](file:///PROJECT_GOVERNANCE.md)** | RACI, modelo de escalonamento, governança baseada em risco e assinaturas. |
+| **[DELIVERY_MODEL.md](file:///DELIVERY_MODEL.md)** | Justificativa do framework, cadência das cerimónias, branching e rollback. |
+| **[EXECUTION_PLAN.md](file:///EXECUTION_PLAN.md)** | Backlog unificado, sequenciamento de milestones e análise de caminho crítico. |
+| **[PROJECT_STATUS.md](file:///PROJECT_STATUS.md)** | Estado atual do sprint, gráficos de burn-down e impedimentos ativos. |
+| **[ROADMAP.md](file:///ROADMAP.md)** | Linha do tempo estratégica de releases e entregas por época. |
+| **[RISKS.md](file:///RISKS.md)** | Matriz de probabilidade e impacto de riscos técnicos e de negócio. |
+| **[DECISIONS.md](file:///DECISIONS.md)** | Log histórico de tomadas de decisão e links rápidos para os ADRs ativos. |
+| **[CHANGELOG.md](file:///CHANGELOG.md)** | Ficheiro de versionamento público dos incrementos entregues. |
+| **[TEAM_STRUCTURE.md](file:///TEAM_STRUCTURE.md)** | Alocação de papéis, lideranças e equipes multidisciplinares (squads). |
+| **[DEPENDENCIES.md](file:///DEPENDENCIES.md)** | Mapa de bloqueadores de terceiros, pacotes e acoplamentos sistémicos. |
+| **[RELEASE_PLAN.md](file:///RELEASE_PLAN.md)** | Protocolo de publicação de pacotes e gating de segurança pré-produção. |
+| **[ARCHITECTURE_STATUS.md](file:///ARCHITECTURE_STATUS.md)** | Auditoria e integridade da separação física de bounded contexts. |
+| **[TECH_STACK_ANALYSIS.md](file:///TECH_STACK_ANALYSIS.md)** | Análise auto-detetada de frameworks, ORMs, custos e bibliotecas obsoletas. |
+| **[COST_ANALYSIS.md](file:///COST_ANALYSIS.md)** | FinOps, custos de infraestrutura em nuvem e token savings. |
+| **[WORKFLOW_ENGINE.md](file:///WORKFLOW_ENGINE.md)** | CI/CD scripts de pipelines e validações automatizadas de builds. |
+| **[QA_STATUS.md](file:///QA_STATUS.md)** | Cobertura de testes, k6 benchmark e modelos de combinatória de testes PICT. |
+| **[SECURITY_STATUS.md](file:///SECURITY_STATUS.md)** | Modelos de ameaças ativas, logs RBAC e validação contra o OWASP Top 10. |
+| **[OBSERVABILITY_STATUS.md](file:///OBSERVABILITY_STATUS.md)** | Monitoramento, SLOs mapeados e dashboards recomendados no Grafana. |
+
+---
+
+## 🎨 O MOTOR DE ESTÉTICA E DIALS VISUAIS
+
+OMEGA rejeita frameworks e layouts genéricos ("AI slop") e força um rigoroso motor de estética baseado em três dials parametrizáveis:
+
+```css
+/* Dials de Design OMEGA */
+DESIGN_VARIANCE   3  /* 1 = Simétrico/Linear  ↔  10 = Caótico/Asimétrico */
+MOTION_INTENSITY  5  /* 1 = Estático          ↔  10 = Cinematográfico */
+VISUAL_DENSITY    4  /* 1 = Galeria de Arte   ↔  10 = Cockpit */
 ```
-project-root/
-├── PROJECT_GOVERNANCE.md      # Modelo de governança, fluxo de decisão, escalonamento e RACI
-├── DELIVERY_MODEL.md          # Framework escolhido, cadência de cerimônias, branch/rollback strategy
-├── PROJECT_STATUS.md          # Painel rápido de saúde da entrega e sprints
-├── ROADMAP.md                 # Marcos estratégicos e cronogramas de portfólio
-├── RISKS.md                   # Registro unificado de riscos e fragilidades
-├── DECISIONS.md               # Histórico de todas as decisões técnicas e de negócio (ADRs)
-├── CHANGELOG.md               # Versões e incrementos entregues
-├── TEAM_STRUCTURE.md          # Alocação de papéis e times multidisciplinares
-├── DEPENDENCIES.md            # Mapas de dependências técnicas e inter-equipes
-├── RELEASE_PLAN.md            # Calendário de releases e portões de segurança
-├── ARCHITECTURE_STATUS.md     # Integridade dos contextos delimitados (DDD)
-├── TECH_STACK_ANALYSIS.md     # Frameworks auto-detectados, ORMs e compatibilidades
-├── COST_ANALYSIS.md           # FinOps, economia de tokens (RTK) e infra spend
-├── EXECUTION_PLAN.md          # Backlog priorizado, sequenciamento e caminho crítico
-├── WORKFLOW_ENGINE.md         # CI/CD, esteiras de automação e validações
-├── QA_STATUS.md               # Cobertura de testes, modelos PICT e relatórios k6
-├── SECURITY_STATUS.md         # Validações OWASP, conformidade de segurança e modelos de ameaças
-├── OBSERVABILITY_STATUS.md    # SLOs, Prometheus alerts e limites de OTel
-└── memory-bank/               # Persistência ativa de memória (6 Ficheiros Core)
+
+### Paleta Curada HSL/OKLCH por Domínio
+*   **Healthcare**: DM Sans/Figtree • tons de esmeralda (`#059669` / `#34D399`)
+*   **Finance**: IBM Plex Sans • tons sóbrios de azul (`#1D4ED8` / `#60A5FA`)
+*   **Productivity**: Geist/Geist Mono • tons de violeta (`#7C3AED` / `#A78BFA`)
+
+### Curvas de Easing Não-Lineares (Banish transition: all)
+```css
+/* Transições suaves e profissionais */
+--ease-out:    cubic-bezier(0.23, 1, 0.32, 1);
+--ease-inout:  cubic-bezier(0.77, 0, 0.175, 1);
+--ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
 ```
 
 ---
 
-## 🛠️ Comandos Especializados (Design & Delivery Vocabulary)
-
-OMEGA implementa 23 comandos especializados frontend e de orquestração de entregas de alta fidelidade:
-- **`craft [funcionalidade]`**: Planeia, desenha e constrói um incremento de software end-to-end.
-- **`shape [funcionalidade]`**: Esboça a arquitetura UX/UI e os padrões antes de qualquer linha de código.
-- **`critique [alvo]`**: Revisão heurística heurística e pontuação de usabilidade técnica.
-- **`polish [alvo]`**: Refinamento impecável de ritmo de espaçamento, OKLCH e micro-interações.
-- **`audit [alvo]`**: Valida acessibilidade (a11y), Core Web Vitals e conformidade estrutural.
-- **`live`**: Inicia testes interativos e simulação de variantes visuais em tempo real no navegador.
-
----
-
-# 🇺🇸 ENGLISH
-
-**OMEGA** is an uncompromising, Big Tech-grade Autonomous Engineering Operating System and **Universal Portfolio Delivery Governance Engine** (inspired by Stripe, Vercel, and Linear). It unifies all development domains under strict Zero-Trust governance, maintains active stateless memory via the **6-Core Memory Bank Standard**, and orchestrates adaptive portfolio delivery cadences (Hybrid, Agile, Waterfall, SAFe, Lean).
-
-## 🚀 The 3 Core Pillars of the OMEGA Engine
-
-### 🏛️ 1. Critical Engineering Governance Engine (Anti-Drift & Anti-Loop)
-OMEGA serves as a strict, non-negotiable principal engineer and auditor. The **Critical Engineering Review Mode** acts upon every architectural change:
-- **Deep Diagnostics**: Audits invisible couplings, premature abstractions, visual slop, and tech debt ROI.
-- **Severity Gating System**:
-  - **🔴 CRITICAL**: Interrupts and blocks execution for immediate architectural/security fixes.
-  - **🟡 HIGH**: Alerts, proposes highly opinionated corrections, and requests swift confirmation.
-  - **🟢 MEDIUM**: Logs recommendations inside `memory-bank/progress.md` as technical `TODO`s.
-  - **🔵 LOW**: Logs changes silently and moves forward.
-
-### 🏢 2. Universal PMO Governance Operating System
-An enterprise program management office designed to maximize velocity and value orientation.
-- **Adaptive PMO Directives**: Analyzes team dimension, technical maturity, compliance depth, and operational risk before drafting workflows.
-- **Framework Orchestration**: Seamlessly automates and justifies Agile (Scrum, Kanban), Waterfall (Prince2), SAFe, and Hybrid delivery models.
-- **AI-Native PMO**: Provides real-time prediction of release blockages, scope creep, and resource overloads.
-
-### 📂 3. Mandatory Workspace Root Structure
-Every project under OMEGA governance strictly maintains the standardized 18 root-level index files (including `PROJECT_GOVERNANCE.md`, `DELIVERY_MODEL.md`, `EXECUTION_PLAN.md`, etc.), guaranteeing 100% compliance without bureaucratic overhead.
-
----
-
-_OMEGA v2.0 • Relentless Engineering & Governance Operating System • Permanent Memory Bank_
+_OMEGA v2.0 • Relentless Engineering & PMO Governance Operating System • Permanent Memory Bank_
