@@ -15,7 +15,7 @@
 
 Every non-trivial technical decision requires an ADR **before implementation begins**.
 
-**ADR Template** — save to `obsidian-vault/14-ADRs/ADR-NNNN-short-title.md`:
+**ADR Template** — save to `{vault}/14-ADRs/ADR-NNNN-short-title.md`:
 
 ```markdown
 ---
@@ -104,7 +104,7 @@ class Order {
 
 Build a shared glossary for each bounded context. Never mix language between contexts — an "Account" in identity context is not the same as "Account" in billing context.
 
-Store at: `obsidian-vault/01-Architecture/ubiquitous-language-[context].md`
+Store at: `{vault}/01-Architecture/ubiquitous-language-[context].md`
 
 ---
 
@@ -292,7 +292,7 @@ repo-root/
 │   ├── scripts/          # Dev tooling, migration scripts
 │   └── monitoring/       # Grafana dashboards, alert rules
 ├── design-system/        # Tokens, Figma exports, HTML primitives
-├── obsidian-vault/       # All project documentation (see 11-obsidian.md)
+├── docs/vault/       # All project documentation (see 11-obsidian.md)
 └── turbo.json            # Turborepo pipeline configuration
 ```
 

@@ -86,7 +86,7 @@ We define strict reliability boundaries for core customer actions:
 ### Incident Recovery Targets
 *   **Sev 1 (Critical Outage)**: Maximum **5 minutes** to acknowledge (PagerDuty), maximum **30 minutes** to mitigate (e.g. DNS fallback, service rollback).
 *   **Sev 2 (Minor Outage)**: Maximum **15 minutes** to acknowledge, maximum **4 hours** to mitigate.
-*   **Post-Mortem Policy**: Every Sev 1 incident requires a comprehensive, non-blaming post-mortem document inside `obsidian-vault/16-Incidents/` within 48 hours of recovery.
+*   **Post-Mortem Policy**: Every Sev 1 incident requires a comprehensive, non-blaming post-mortem document inside `{vault}/16-Incidents/` within 48 hours of recovery.
 
 ---
 

@@ -15,7 +15,7 @@ OMEGA TITAN structures its cybersecurity controls under the **ISO/IEC 27001:2022
 ### Core ISO 27001 Control Domains
 *   **Annex A.5 (Organizational Controls)**: Explicit policies governing access privileges, asset classifications, and continuous risk assessments.
 *   **Annex A.8 (Technological Controls)**: Enforce hardware security, automated system backups, secure configuration baselines, and end-to-end traffic encryption (mTLS).
-*   **Incident Logging**: All security-related alerts must map to the `obsidian-vault/16-Incidents/` repository for forensic tracing.
+*   **Incident Logging**: All security-related alerts must map to the `{vault}/16-Incidents/` repository for forensic tracing.
 
 ---
 

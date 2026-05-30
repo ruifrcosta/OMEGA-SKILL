@@ -1,0 +1,8 @@
+{
+  "modular-css-layout-mc@@callout-nowrap-min-width": 250,
+  "modular-css-layout-mc@@callout-min-width": 200,
+  "modular-css-layout-mc@@mcl-card-bg-color@@dark": "#191919D6",
+  "modular-css-layout-mc@@mcl-card-gap": "0.5em",
+  "modular-css-layout-mc@@mcl-card-border-width": "5px",
+  "modular-css-layout-mc@@mcl-card-header-border-width": "2px"
+}

@@ -180,56 +180,58 @@ def resolve_vault_path(cwd: Path | None = None) -> tuple[Path, str]:
 # ─────────────────────────────────────────────────────────────────────────────
 
 OBSIDIAN_APP_JSON = """{
-  "legacyEditor": false,
+  "readableLineLength": false,
+  "propertiesInDocument": "hidden",
   "livePreview": true,
-  "defaultViewMode": "preview",
-  "foldIndent": true,
-  "showLineNumber": true,
-  "readableLineLength": true,
-  "strictLineBreaks": false,
-  "showFrontmatter": false,
-  "tabSize": 2,
-  "useTab": false,
-  "spellcheck": false,
-  "spellcheckLanguages": ["en", "pt"],
   "promptDelete": false,
-  "trashOption": "local"
+  "defaultViewMode": "preview",
+  "showInlineTitle": false,
+  "strictLineBreaks": true
 }"""
 
 OBSIDIAN_APPEARANCE_JSON = """{
+  "accentColor": "#ffaf1a",
+  "cssTheme": "Vicious",
   "theme": "obsidian",
-  "baseFontSize": 15,
-  "textFontFamily": "Inter",
-  "monospaceFont": "JetBrains Mono",
-  "interfaceFontFamily": "Inter",
-  "enabledCssSnippets": ["omega-theme"]
+  "baseFontSize": 11,
+  "enabledCssSnippets": [
+    "MCL Multi Column",
+    "Heatmap Calendar",
+    "MCL Gallery Cards",
+    "MCL Wide Views",
+    "minimal-cards_anu",
+    "omega-theme"
+  ],
+  "translucency": true
 }"""
 
 OBSIDIAN_GRAPH_JSON = """{
   "collapse-filter": false,
   "search": "",
   "showTags": true,
-  "showAttachments": false,
-  "hideUnresolved": false,
+  "showAttachments": true,
+  "hideUnresolved": true,
   "showOrphans": true,
   "collapse-color-groups": false,
   "colorGroups": [
-    { "query": "tag:#adr",       "color": { "a": 1, "rgb": 14048748 } },
+    { "query": "tag:#adr",       "color": { "a": 1, "rgb": 16760576 } },
     { "query": "tag:#security",  "color": { "a": 1, "rgb": 16711680 } },
     { "query": "tag:#incident",  "color": { "a": 1, "rgb": 16744272 } },
-    { "query": "tag:#runbook",   "color": { "a": 1, "rgb": 5025613  } }
+    { "query": "tag:#runbook",   "color": { "a": 1, "rgb": 5025613  } },
+    { "query": "tag:#sprint",    "color": { "a": 1, "rgb": 5592575  } },
+    { "query": "tag:#memory",    "color": { "a": 1, "rgb": 10066329 } }
   ],
   "collapse-display": false,
-  "showArrow": true,
+  "showArrow": false,
   "textFadeMultiplier": 0,
-  "nodeSizeMultiplier": 1.2,
+  "nodeSizeMultiplier": 1,
   "lineSizeMultiplier": 1,
   "collapse-forces": false,
   "centerStrength": 0.518713248970312,
   "repelStrength": 10,
   "linkStrength": 1,
   "linkDistance": 250,
-  "scale": 1,
+  "scale": 0.65,
   "close": false
 }"""
 
@@ -272,26 +274,38 @@ OBSIDIAN_WORKSPACE_JSON = """{
 }"""
 
 OMEGA_CSS_SNIPPET = """:root {
-  --omega-accent: #f59e0b;
-  --omega-accent-dim: rgba(245, 158, 11, 0.15);
+  --omega-accent:     #ffaf1a;
+  --omega-accent-dim: rgba(255, 175, 26, 0.15);
+  --color-adr:        #ffaf1a;
+  --color-security:   #ff4444;
+  --color-incident:   #ff8800;
+  --color-runbook:    #4caf50;
+  --color-sprint:     #55aaff;
+  --color-memory:     #9966aa;
 }
 
-.theme-dark {
-  --background-primary: #0f1117;
-  --background-secondary: #161b22;
-  --background-modifier-border: rgba(255,255,255,0.07);
-  --text-normal: #e6edf3;
-  --text-muted: #8b949e;
-  --interactive-accent: var(--omega-accent);
+/* File-tree: highlight critical OMEGA folders */
+.nav-folder-title[data-path^="14-ADRs"],
+.nav-folder-title[data-path^="15-Runbooks"],
+.nav-folder-title[data-path^="00-Executive"] {
+  color: var(--omega-accent);
+  font-weight: 700;
+}
+.nav-folder-title[data-path^="09-Security"] { color: var(--color-security); }
+.nav-folder-title[data-path^="16-Incidents"] { color: var(--color-incident); }
+.nav-folder-title[data-path^="13-Sprints"] { color: var(--color-sprint); }
+.nav-folder-title[data-path^="32-AI-Memory"] { color: var(--color-memory); }
+
+/* Memory-bank notes get a subtle left border */
+.nav-file-title[data-path*="memory-bank"] {
+  border-left: 2px solid var(--color-memory);
+  padding-left: 6px;
 }
 
-/* Status badge colouring in frontmatter */
-.cm-s-obsidian .tag { border-radius: 4px; padding: 1px 6px; }
-
-/* File-tree folder icon colour for numbered OMEGA folders */
-.nav-folder-title[data-path^="00-"],
-.nav-folder-title[data-path^="14-"],
-.nav-folder-title[data-path^="15-"] { color: var(--omega-accent); font-weight: 600; }
+/* Status badges in properties */
+.tag[data-tag="status/proposed"] { background: rgba(255,175,26,0.2); }
+.tag[data-tag="status/accepted"]  { background: rgba(76,175,80,0.2); }
+.tag[data-tag="status/archived"]  { background: rgba(120,120,120,0.2); }
 """
 
 
@@ -313,11 +327,41 @@ def write_obsidian_config(vault_path: Path) -> None:
     plugins_dir = obsidian_dir / 'plugins'
     plugins_dir.mkdir(exist_ok=True)
 
-    community_plugins = ["dataview", "templater-obsidian", "obsidian-git", "calendar"]
+    # Exact plugin list from examples/.obsidian/community-plugins.json
+    community_plugins = [
+        "dataview", "templater-obsidian", "calendar", "periodic-notes",
+        "obsidian-tasks-plugin", "obsidian-kanban", "obsidian-excalidraw-plugin",
+        "table-editor-obsidian", "url-into-selection", "quickadd",
+        "recent-files-obsidian", "obsidian-style-settings", "obsidian-icon-folder",
+        "mermaid-tools", "obsidian42-brat", "obsidian-git"
+    ]
     (obsidian_dir / 'community-plugins.json').write_text(
         json.dumps(community_plugins, indent=2), encoding='utf-8'
     )
-    print('  ✓ .obsidian/ config written (app, appearance, graph, hotkeys, workspace, css)')
+
+    # Core plugins — exact from examples/.obsidian/core-plugins.json
+    core_plugins = {
+        "file-explorer": True, "global-search": True, "switcher": True,
+        "graph": True, "backlink": True, "canvas": True, "outgoing-link": True,
+        "tag-pane": True, "properties": True, "page-preview": True,
+        "daily-notes": True, "templates": True, "note-composer": True,
+        "command-palette": True, "slash-command": False, "editor-status": True,
+        "bookmarks": True, "markdown-importer": False, "zk-prefixer": False,
+        "random-note": False, "outline": True, "word-count": True,
+        "slides": False, "audio-recorder": False, "workspaces": True,
+        "file-recovery": True, "publish": False, "sync": True, "bases": True
+    }
+    (obsidian_dir / 'core-plugins.json').write_text(
+        json.dumps(core_plugins, indent=2), encoding='utf-8'
+    )
+
+    # daily-notes config
+    (obsidian_dir / 'daily-notes.json').write_text(
+        json.dumps({"folder": "13-Sprints/daily", "format": "YYYY-MM-DD", "template": "13-Sprints/templates/daily-note"}, indent=2),
+        encoding='utf-8'
+    )
+
+    print('  ✓ .obsidian/ config written (app, appearance, graph, hotkeys, workspace, css, plugins, core)')
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -577,6 +621,99 @@ def cmd_init_vault(args) -> None:
     if not rb_index.exists():
         rb_index.write_text(generate_runbook_index(), encoding='utf-8')
         print(f'  + 15-Runbooks/runbook-index.md')
+
+    # 32-AI-Memory: session log and learned patterns
+    ai_mem_dir = vault_path / '32-AI-Memory'
+    ai_mem_dir.mkdir(exist_ok=True)
+
+    session_log = ai_mem_dir / 'session-log.md'
+    if not session_log.exists():
+        session_log.write_text(f"""---
+title: "OMEGA Session Log"
+created: {datetime.date.today().isoformat()}
+updated: {datetime.date.today().isoformat()}
+status: active
+tags: [memory, agent, session]
+---
+
+# OMEGA Session Log
+
+This file is the agent's long-term memory archive.
+Append a new entry at the end of every session.
+
+## Log Format
+
+```markdown
+## YYYY-MM-DD — Session N
+**Focus:** [what was worked on]
+**Decisions:** [key choices made]
+**Patterns learned:** [reusable patterns discovered]
+**Files changed:** [list of vault paths modified]
+**Next session:** [what to pick up]
+```
+
+---
+
+_Maintained by OMEGA Obsidian Agent · [[README]]_
+""", encoding='utf-8')
+        print('  + 32-AI-Memory/session-log.md')
+
+    learned = ai_mem_dir / 'learned-patterns.md'
+    if not learned.exists():
+        learned.write_text(f"""---
+title: "Learned Patterns"
+created: {datetime.date.today().isoformat()}
+status: active
+tags: [memory, agent, patterns]
+---
+
+# Learned Patterns
+
+Reusable patterns OMEGA has discovered across projects.
+Add entries when a new pattern proves valuable.
+
+## Pattern Format
+```markdown
+### [Pattern Name]
+**Context:** when to apply
+**Solution:** the pattern
+**Outcome:** result observed
+**First seen:** YYYY-MM-DD
+```
+
+---
+
+_OMEGA Knowledge Vault · [[32-AI-Memory/session-log]] · [[README]]_
+""", encoding='utf-8')
+        print('  + 32-AI-Memory/learned-patterns.md')
+
+    error_mem = ai_mem_dir / 'error-memory.md'
+    if not error_mem.exists():
+        error_mem.write_text(f"""---
+title: "Error Memory"
+created: {datetime.date.today().isoformat()}
+status: active
+tags: [memory, agent, errors]
+---
+
+# Error Memory
+
+Mistakes and corrections logged to prevent repetition.
+
+## Entry Format
+```markdown
+### YYYY-MM-DD — [Error Description]
+**What happened:** describe the mistake
+**Root cause:** why it happened
+**Correction:** what was done to fix it
+**Prevention:** how to avoid in future
+```
+
+---
+
+_OMEGA Knowledge Vault · [[32-AI-Memory/session-log]] · [[README]]_
+""", encoding='utf-8')
+        print('  + 32-AI-Memory/error-memory.md')
 
     # Write vault config file so other tools can find it
     config = {

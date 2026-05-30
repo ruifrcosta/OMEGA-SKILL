@@ -1,0 +1,14 @@
+{
+  "accentColor": "#ffaf1a",
+  "cssTheme": "Vicious",
+  "theme": "obsidian",
+  "baseFontSize": 11,
+  "enabledCssSnippets": [
+    "MCL Multi Column",
+    "Heatmap Calendar",
+    "MCL Gallery Cards",
+    "MCL Wide Views",
+    "minimal-cards_anu"
+  ],
+  "translucency": true
+}

@@ -107,6 +107,72 @@ When Claude cannot execute scripts, apply the algorithm mentally:
 
 ---
 
+## 1b. Dual Purpose — Documentation AND Agent Memory
+
+The vault serves two inseparable functions:
+
+### Function 1: Project Documentation
+The 33-folder structure holds all engineering decisions, runbooks, ADRs, incidents,
+sprint history, security audits, and operational procedures.
+
+### Function 2: OMEGA Agent Memory (Stateless Persistence)
+OMEGA has no persistent memory between conversations by default.
+The vault **is** the memory. The `memory-bank/` folder at project root syncs
+with the vault to give OMEGA its "brain":
+
+```
+project-root/
+├── memory-bank/                  ← OMEGA reads ALL 6 files at session start
+│   ├── projectbrief.md           → What we're building and why
+│   ├── productContext.md         → UX goals and user flows
+│   ├── systemPatterns.md         → Architecture patterns and DDD contexts
+│   ├── techContext.md            → Tech stack, constraints, package limits
+│   ├── activeContext.md          → Current focus, recent changes, decisions
+│   └── progress.md               → Task checklist [x]/[/]/[ ]
+│
+└── docs/vault/                   ← Full Obsidian knowledge vault
+    ├── 32-AI-Memory/             ← Agent memory archive (long-term)
+    │   ├── session-log.md        → Append-only session history
+    │   ├── learned-patterns.md   → Reusable patterns discovered
+    │   └── error-memory.md       → Mistakes and corrections logged
+    └── ... (33 folders)
+```
+
+**Session start protocol (OMEGA always does this):**
+```
+1. Run: python scripts/omega-cli.py resolve-vault
+2. Read ALL 6 memory-bank/ files
+3. Read {vault}/32-AI-Memory/session-log.md (last 5 entries)
+4. Announce boot block with memory sync status
+5. Proceed with task
+```
+
+**Session end protocol (OMEGA always does this):**
+```
+1. Update memory-bank/activeContext.md (what changed, decisions made)
+2. Update memory-bank/progress.md (mark tasks [x] or [/])
+3. Append to {vault}/32-AI-Memory/session-log.md
+4. Sync any new vault documents created this session
+```
+
+**32-AI-Memory/ document structure:**
+```markdown
+---
+title: "Session Log"
+updated: YYYY-MM-DD
+tags: [memory, agent, session]
+---
+## YYYY-MM-DD — Session N
+**Focus:** [what was worked on]
+**Decisions:** [key choices made]
+**Patterns learned:** [reusable patterns discovered]
+**Files changed:** [list]
+**Next session:** [what to pick up next]
+```
+
+
+---
+
 ## 2. Vault Structure — 33 Folders {#structure}
 
 Once the vault path is resolved, the structure is always:
@@ -169,35 +235,101 @@ Once the vault path is resolved, the structure is always:
 
 ## 3. .obsidian/ Configuration {#obsidian-config}
 
-The `init-vault` command writes a complete `.obsidian/` directory. Key settings:
+`python scripts/omega-cli.py init-vault` writes a complete `.obsidian/` directory.
+All settings mirror the canonical config in `examples/.obsidian/`.
 
-**app.json** — Core editor settings (live preview, line numbers, readable width)
-
-**appearance.json** — Dark theme, Inter font, JetBrains Mono for code
-
-**graph.json** — Colour-coded knowledge graph:
-- ADR nodes → amber
-- Security nodes → red
-- Incident nodes → orange
-- Runbook nodes → green
-
-**omega-theme.css** — Custom CSS snippet:
-```css
-:root { --omega-accent: #f59e0b; }
-.theme-dark {
-  --background-primary: #0f1117;     /* near-black */
-  --background-secondary: #161b22;   /* GitHub dark secondary */
+### app.json
+```json
+{
+  "readableLineLength": false,
+  "propertiesInDocument": "hidden",
+  "livePreview": true,
+  "promptDelete": false,
+  "defaultViewMode": "preview",
+  "showInlineTitle": false,
+  "strictLineBreaks": true
 }
-/* ADR/Runbook folders highlighted in amber */
-.nav-folder-title[data-path^="14-"],
-.nav-folder-title[data-path^="15-"] { color: var(--omega-accent); font-weight: 600; }
 ```
 
-**community-plugins.json** — Recommended plugins:
-- `dataview` — Query vault as a database
-- `templater-obsidian` — Document templates
-- `obsidian-git` — Auto-commit vault to git
-- `calendar` — Sprint calendar view
+### appearance.json — Vicious theme, amber accent
+```json
+{
+  "accentColor": "#ffaf1a",
+  "cssTheme": "Vicious",
+  "theme": "obsidian",
+  "baseFontSize": 11,
+  "enabledCssSnippets": [
+    "MCL Multi Column", "Heatmap Calendar",
+    "MCL Gallery Cards", "MCL Wide Views",
+    "minimal-cards_anu", "omega-theme"
+  ],
+  "translucency": true
+}
+```
+
+### graph.json — Domain-coloured knowledge graph
+```json
+{
+  "showTags": true,
+  "showAttachments": true,
+  "hideUnresolved": true,
+  "showOrphans": true,
+  "colorGroups": [
+    { "query": "tag:#adr",      "color": { "a": 1, "rgb": 16760576 } },
+    { "query": "tag:#security", "color": { "a": 1, "rgb": 16711680 } },
+    { "query": "tag:#incident", "color": { "a": 1, "rgb": 16744272 } },
+    { "query": "tag:#runbook",  "color": { "a": 1, "rgb": 5025613  } },
+    { "query": "tag:#sprint",   "color": { "a": 1, "rgb": 5592575  } },
+    { "query": "tag:#memory",   "color": { "a": 1, "rgb": 10066329 } }
+  ]
+}
+```
+
+### community-plugins.json — Full plugin list
+```json
+[
+  "dataview",              "templater-obsidian",    "calendar",
+  "periodic-notes",        "obsidian-tasks-plugin", "obsidian-kanban",
+  "obsidian-excalidraw-plugin", "table-editor-obsidian", "url-into-selection",
+  "quickadd",              "recent-files-obsidian", "obsidian-style-settings",
+  "obsidian-icon-folder",  "mermaid-tools",         "obsidian42-brat",
+  "obsidian-git"
+]
+```
+
+**Plugin roles:**
+| Plugin | Purpose in OMEGA |
+|--------|-----------------|
+| `dataview` | Query vault as a database — sprint dashboards, ADR indexes |
+| `templater-obsidian` | Document templates for ADR, runbook, sprint, post-mortem |
+| `calendar` + `periodic-notes` | Sprint calendar view and daily notes in `13-Sprints/daily/` |
+| `obsidian-tasks-plugin` | Task tracking across all vault documents |
+| `obsidian-kanban` | Visual sprint board from `13-Sprints/` |
+| `obsidian-excalidraw-plugin` | Architecture diagrams embedded in vault |
+| `mermaid-tools` | Enhanced Mermaid diagram editing |
+| `obsidian-git` | Auto-commit vault to git — persistent memory across sessions |
+| `quickadd` | One-keystroke ADR/runbook/sprint creation |
+| `obsidian42-brat` | Beta plugin manager for bleeding-edge tools |
+
+### omega-theme.css snippet
+```css
+:root {
+  --omega-accent:     #ffaf1a;
+  --color-security:   #ff4444;
+  --color-incident:   #ff8800;
+  --color-runbook:    #4caf50;
+  --color-sprint:     #55aaff;
+  --color-memory:     #9966aa;
+}
+.nav-folder-title[data-path^="14-ADRs"],
+.nav-folder-title[data-path^="15-Runbooks"],
+.nav-folder-title[data-path^="00-Executive"] { color: var(--omega-accent); font-weight: 700; }
+.nav-folder-title[data-path^="09-Security"]  { color: var(--color-security); }
+.nav-folder-title[data-path^="16-Incidents"] { color: var(--color-incident); }
+.nav-folder-title[data-path^="13-Sprints"]   { color: var(--color-sprint); }
+.nav-folder-title[data-path^="32-AI-Memory"] { color: var(--color-memory); }
+.nav-file-title[data-path*="memory-bank"]    { border-left: 2px solid var(--color-memory); padding-left: 6px; }
+```
 
 ---
 

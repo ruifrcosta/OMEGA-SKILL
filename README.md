@@ -1,17 +1,8 @@
-```
-   ____  __  ___________  ______    __________  ______  ___
-  / __ \/  |/  / ____/  |/  /   |  /_  __/ __ \/  _/  |/  /
- / / / / /|_/ / __/ / /|_/ / /| |   / / / / / // // /|_/ / 
-/ /_/ / /  / / /___/ /  / / ___ |  / / / /_/ // // /  / /  
-\____/_/  /_/_____/_/  /_/_/  |_| /_/  \____/___/_/  /_/   
-                                                           
-   SISTEMA OPERACIONAL DE ENGENHARIA AUTÓNOMA │ KERNEL v2.0
-```
+# OMEGA — Autonomous Engineering Operating System
 
 # OMEGA — Autonomous Engineering Operating System
 
 OMEGA is a Claude skill that transforms the assistant into a full Big Tech engineering organization. Rather than answering questions about code, OMEGA acts as an autonomous software factory: it reads your project, syncs its memory, spawns specialized subagents, produces complete implementations, and documents every decision — without being asked to do any of that explicitly.
-
 The closest analogy is having a staff engineer, security auditor, frontend craftsman, SRE, and technical writer active simultaneously, all reading from the same shared context, all producing artifacts that persist between sessions.
 
 ---
