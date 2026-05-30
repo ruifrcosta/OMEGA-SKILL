@@ -8,193 +8,217 @@
    SISTEMA OPERACIONAL DE ENGENHARIA AUTÓNOMA │ KERNEL v2.0
 ```
 
-# OMEGA — SISTEMA OPERACIONAL DE ENGENHARIA DE SOFTWARE AUTÓNOMO, DESIGN IMPECAVEL & GOVERNANÇA PMO
+# OMEGA — Autonomous Engineering Operating System
 
-O **OMEGA** é um motor de desenvolvimento, arquitetura, design visual e governança de portfólio de nível Big Tech (altamente inspirado na cultura e padrões da Stripe, Vercel, Linear e OpenAI). 
+OMEGA is a Claude skill that transforms the assistant into a full Big Tech engineering organization. Rather than answering questions about code, OMEGA acts as an autonomous software factory: it reads your project, syncs its memory, spawns specialized subagents, produces complete implementations, and documents every decision — without being asked to do any of that explicitly.
 
-Ele unifica todas as capacidades sob um único modelo de **Governança Zero-Trust**, sincroniza o estado dinamicamente através do padrão de **6-Core Memory Bank** do espaço de trabalho e implementa um **Universal PMO Engine** para entregas e cadências proporcionais (Híbrido, Agile, Waterfall, SAFe, Lean).
-
----
-
-## 📂 ÍNDICE GERAL DO MANUAL
-
-1. [Manual de Instalação e Atualização](#-manual-de-instalação-e-atualização)
-2. [Manual de Ativação (Prompts e Gatilhos)](#-manual-de-ativação-prompts-e-gatilhos)
-3. [Os Três Pilares da Engenharia OMEGA](#-os-três-pilares-da-engenharia-omega)
-4. [Catálogo Completo de Comandos (Impeccable Vocabulary)](#-catálogo-completo-de-comandos)
-5. [O Cofre PMO (Índice de 18 Arquivos Mandatórios)](#-o-cofre-pmo-índice-de-18-arquivos-mandatórios)
-6. [O Motor de Estética e Dials Visuais](#-o-motor-de-estética-e-dials-visuais)
+The closest analogy is having a staff engineer, security auditor, frontend craftsman, SRE, and technical writer active simultaneously, all reading from the same shared context, all producing artifacts that persist between sessions.
 
 ---
 
-## 📦 MANUAL DE INSTALAÇÃO E ATUALIZAÇÃO
+## What OMEGA does on every response
 
-O OMEGA pode ser instalado globalmente ou localmente em qualquer ambiente baseado em **Claude Code**, **Antigravity SDK** ou terminal CLI padrão.
+Before writing a single line of code, OMEGA runs a mandatory boot sequence. It announces itself with a structured header showing the detected domain, active phase, agents spawned, and references being read. It then resolves the vault path (never assuming a fixed location), reads all six memory-bank files to restore context from the previous session, and consults the relevant domain reference files. Only then does it implement.
 
-### 1. Instalação Automática (Recomendada)
-Para instalar o OMEGA instantaneamente a partir do ecossistema aberto de AI Skills, execute:
+After finishing, it appends a session summary to the vault and updates the memory-bank files so the next session begins with full context.
+
+This behavior is not optional and cannot be skipped. It runs on every response.
+
+---
+
+## Reference architecture
+
+OMEGA ships with 25 domain reference files that the agents read before acting. These are not guidelines — they contain the actual implementation patterns, code templates, checklists, and troubleshooting procedures used during execution.
+
+| Reference | Domain |
+|-----------|--------|
+| `00-troubleshooting.md` | Universal debugging playbook — read first when anything is broken |
+| `01-architecture.md` | ADRs, DDD, CQRS, hexagonal architecture, event sourcing |
+| `02-design-system.md` | Design tokens, OKLCH color scales, typography, component states |
+| `03-infrastructure.md` | Docker multi-stage, Kubernetes manifests, Terraform, Helm |
+| `04-frontend.md` | Next.js App Router, React Server Components, Zustand, Web Vitals |
+| `05-backend.md` | NestJS, Go, API contracts, Postgres indexing, queue workers |
+| `06-mobile.md` | Expo Router, offline-first, Reanimated, FlashList, SecureStore |
+| `07-security.md` | Zero Trust, RBAC, OWASP Top 10, CORS hardening, JWT patterns |
+| `08-data.md` | Kafka, Airflow, dbt, ML pipelines, pgvector |
+| `09-observability.md` | OpenTelemetry, Prometheus alerts, Grafana dashboards, SLOs |
+| `10-ai-agents.md` | LangGraph, RAG hybrid search, MCP, prompt caching, token governance |
+| `11-obsidian.md` | Vault discovery protocol, 33-folder structure, dual documentation/memory role |
+| `12-diagrams.md` | Mermaid: C4, ERD, sequence, flowchart, state diagrams |
+| `13-token-cost.md` | Prompt caching, model routing, token budget enforcement, cost attribution |
+| `14-supabase-resend.md` | Supabase RLS policies, auth patterns, Resend email queuing |
+| `15-qa-testing.md` | Playwright, Vitest, k6, PICT combinatorial testing, accessibility |
+| `16-monorepo.md` | Turborepo, pnpm workspaces, package boundaries, design tokens |
+| `17-compliance.md` | ISO 27001, SOC 2, GDPR Article 17, HIPAA column encryption |
+| `18-marketing-growth.md` | CRO, conversion copy, CTA formulas, landing page structure |
+| `19-google-workspace.md` | Google Workspace APIs, Apps Script, Model Armor, Sheets automation |
+| `20-taste-engine.md` | Anti-slop frontend: 3-dial system, 47 bans, Pre-Flight checklist, liquid-glass CSS |
+| `21-humanizer.md` | Anti-AI writing: 29-pattern audit, voice calibration, zero em-dashes |
+| `22-find-skills.md` | Skill registry discovery, quality gates, installation protocol |
+| `23-memory-bank.md` | 6-core memory bank scaffolding, session persistence, boot protocol |
+
+---
+
+## Subagent system
+
+OMEGA routes tasks to specialized agents based on trigger keywords. Each agent announces its activation, reads its assigned reference file, executes, then documents its output to the vault.
+
+| Trigger | Agent |
+|---------|-------|
+| Architecture, ADR, DDD, CQRS | Arch Agent |
+| Security, CORS, RBAC, OWASP | Security Agent |
+| Frontend, React, Next.js, component | Frontend Agent |
+| Mobile, Expo, React Native | Mobile Agent |
+| Docker, Kubernetes, Terraform | Infra Agent |
+| NestJS, Go, API, queue, Postgres | Backend Agent |
+| Tests, Playwright, k6, coverage | QA Agent |
+| Grafana, SLO, OTel, monitoring | SRE Agent |
+| LangGraph, RAG, vector, agents | AI Agent |
+| Sprint, phase, milestone, roadmap | PMO Agent |
+| Design, craft, shape, polish, taste | Design Agent |
+| Token cost, budget, FinOps | FinOps Agent |
+| Vault, ADR, Obsidian, runbook | Obsidian Agent |
+| Growth, CRO, copy, conversion | Growth Agent |
+| Any broken behavior, crash, error | Debug Agent |
+| Frontend quality, design Pre-Flight | Taste Agent |
+| Any text output: docs, ADRs, copy | Humanizer Agent |
+
+---
+
+## Memory system
+
+OMEGA maintains continuity across stateless sessions through two layers.
+
+The first layer is `memory-bank/` at the project root — six markdown files that serve as working memory. OMEGA reads all six at session start, then updates them at session end with what changed, what was decided, and what to pick up next.
+
+```
+memory-bank/
+    projectbrief.md      Requirements, scope, and what is explicitly out of scope
+    productContext.md    Why this project exists, UX goals, user flows
+    systemPatterns.md    Architecture patterns, DDD contexts, critical paths
+    techContext.md       Stack, versions, constraints, package limits
+    activeContext.md     Current sprint focus, recent changes, active decisions
+    progress.md          Task checklist: [ ] planned, [/] in-progress, [x] done
+```
+
+The second layer is the vault's `32-AI-Memory/` folder — session logs, learned patterns, and error memory. These persist across sessions through obsidian-git.
+
+---
+
+## Vault system
+
+OMEGA never creates documentation at the project root and never assumes a fixed vault location. At the start of every session it runs a discovery algorithm:
+
+1. Is `OMEGA_VAULT_PATH` set? Use it.
+2. Is there a `.git` directory? Walk up to find the repo root.
+3. Does `docs/` exist? Vault goes in `docs/vault/`.
+4. Does `documentation/` or `wiki/` exist? Vault goes inside it.
+5. Does a legacy `obsidian-vault/` exist? Honor it, never rename.
+6. Nothing found? Create `docs/vault/`.
+
+When initialized, the vault receives a complete `.obsidian/` configuration matching the canonical setup in `examples/.obsidian/`, including the Vicious theme, amber accent (`#ffaf1a`), and 16 community plugins.
+
+The 33 vault folders cover every domain of organizational knowledge, from `00-Executive` through `33-Architecture-Recovery`. ADRs live in `14-ADRs/`. Runbooks live in `15-Runbooks/`. Post-mortems live in `16-Incidents/`. Agent memory archives live in `32-AI-Memory/`.
+
+To initialize the vault on a project:
 
 ```bash
-# Instalação global (registado no sistema e disponível para todos os projetos)
+python scripts/omega-cli.py resolve-vault   # see where it resolves
+python scripts/omega-cli.py init-vault      # create it
+python scripts/omega-cli.py status          # check health
+python scripts/omega-cli.py audit           # scan for secrets and vault gaps
+python scripts/omega-cli.py create-adr --title "Your Decision" --status proposed
+```
+
+---
+
+## Design system
+
+OMEGA applies a different visual identity based on the project's business domain.
+
+| Domain | Heading / Body | Accent |
+|--------|---------------|--------|
+| Healthcare | Figtree / DM Sans | Emerald `#059669` |
+| Finance | Söhne / IBM Plex Sans | Royal Blue `#1D4ED8` |
+| Productivity | Geist / Geist Mono | Violet `#7C3AED` |
+| E-Commerce | Playfair Display / Nunito | Amber `#FBBF24` |
+| Fitness | Space Grotesk / DM Sans | Green `#16A34A` |
+| Education | Lora / Source Serif 4 | Blue `#2563EB` |
+| NFT / Web3 | Anton / mono | Neon `#6FFF00` |
+| Travel / Media | Instrument Serif / Barlow | Amber `#F59E0B` |
+
+Every frontend task sets three dials before producing any output: `DESIGN_VARIANCE` (1 = symmetric, 10 = asymmetric chaos), `MOTION_INTENSITY` (1 = static, 10 = cinematic), and `VISUAL_DENSITY` (1 = art gallery, 10 = cockpit). These govern layout, animation, and component density decisions.
+
+Hardcoded bans include `transition: all`, `scale(0)` entrances, `ease-in` on UI elements, `h-screen` for heroes, nested card grids, neon gradients, and em-dashes in any text output.
+
+---
+
+## Governance
+
+Every significant architectural decision requires an ADR written before implementation begins. OMEGA will refuse to implement something that lacks a corresponding ADR when the decision is non-trivial.
+
+OMEGA classifies all findings by severity:
+
+- Critical: blocks execution. Security breach, architecture corruption, data loss risk. Must be corrected before any implementation.
+- High: alerts and proposes a fix. Performance under scale, structural drift. Waits for confirmation before proceeding.
+- Medium: logs and proceeds. Minor technical debt, style deviation. Creates a TODO in `progress.md`.
+- Low: proceeds silently. Cosmetic changes. Updates context and continues.
+
+Every security task validates against the OWASP Top 10. Every API endpoint receives: input validation, RBAC check, rate limiting, structured logging with trace ID, idempotency key on mutations, and a versioned path.
+
+---
+
+## Installation
+
+OMEGA is installed as a Claude skill. Upload the `.skill` file through Claude's settings interface under Skills, or install via the CLI if available:
+
+```bash
 npx skills add ruifrcosta/OMEGA-SKILL -g -y
-
-# Instalação local no diretório do projeto atual
-npx skills add ruifrcosta/OMEGA-SKILL -y
 ```
 
-### 2. Instalação Manual (Git Fallback)
-Caso prefira instalar diretamente a partir do repositório fonte para fins de contribuição ou desenvolvimento offline:
+To update:
 
 ```bash
-# Clone para a pasta de skills globais do Antigravity
-git clone https://github.com/ruifrcosta/OMEGA-SKILL.git ~/.gemini/config/skills/OMEGA-SKILL
-
-# Clone para a pasta de skills globais do Claude Code
-git clone https://github.com/ruifrcosta/OMEGA-SKILL.git ~/.claude/skills/OMEGA-SKILL
-```
-
-### 3. Manual de Atualização (Skills Update)
-Para garantir que a sua instância local ou global possui as últimas atualizações de segurança, novos comandos do Taste Engine e correções de governança:
-
-```bash
-# Verificar se existem atualizações disponíveis para as skills instaladas
-npx skills check
-
-# Atualizar todas as skills para a versão mais recente
 npx skills update
+```
 
-# Para forçar a reinstalação e atualização manual de uma skill específica
-npx skills add ruifrcosta/OMEGA-SKILL --force
+To check the vault after installation on a project:
+
+```bash
+python scripts/omega-cli.py status
 ```
 
 ---
 
-## 🚀 MANUAL DE ATIVAÇÃO (PROMPTS E GATILHOS)
+## Repository structure
 
-O OMEGA entra em execução de forma autónoma através de palavras-chave, ou pode ser convocado explicitamente utilizando prompts de engenharia principal ou comandos da CLI.
-
-### A. Gatilhos de Ativação Rápida
-O assistente ativará o OMEGA ao detetar qualquer um destes termos nas suas solicitações:
-*   *Arquitetura*: "Desenhar ADR", "mapear bounded contexts", "aplicar CQRS", "blueprints do sistema".
-*   *UI/UX*: "Interface minimalista", "escala OKLCH", "polir interface", "estética Stripe/Vercel", "Bento Grid".
-*   *Governança/PMO*: "Definir modelo de delivery", "criar RACI", "esboçar execution plan", "mapear dependências".
-*   *Segurança*: "Auditar CORS", "aplicar Zero Trust", "checklist OWASP", "criptografar senhas".
-
----
-
-### B. Prompts Prontos para Ativar a Skill
-
-#### 🟢 Prompt 1: Scaffolding de Novo Projeto (Modelo PMO Híbrido)
-> *"Usa a skill OMEGA para inicializar a estrutura PMO completa do meu projeto. Deteta a minha stack e cria os 18 arquivos mandatórios de raiz (PROJECT_GOVERNANCE, DELIVERY_MODEL, etc.) aplicando governança baseada em risco."*
-
-#### 🔵 Prompt 2: Engenharia Frontend (Taste Engine & OKLCH)
-> *"Usa a skill OMEGA para desenhar uma dashboard de produto. Aplica o Taste Engine com dials (Variance: 3, Motion: 5, Density: 4). Garanta contraste absoluto usando cores OKLCH e respeite a regra 'Sem Cartões'."*
-
-#### 🔴 Prompt 3: Auditoria Crítica de Arquitetura e Segurança
-> *"OMEGA, entra em Critical Engineering Review Mode. Faz uma auditoria completa na minha API e banco de dados. Quero portões de severidade ativados e validação contra o OWASP Top 10."*
-
-#### 🟡 Prompt 4: Sincronismo e Alinhamento de Memória
-> *"Usa a skill OMEGA para atualizar o Memory Bank. Executa o drift detection comparando a implementação atual do código com os ficheiros activeContext.md e progress.md."*
-
----
-
-## 🏛️ OS TRÊS PILARES DA ENGENHARIA OMEGA
-
-### 🚦 Pilar I — Governança Crítica (Review Mode & Gates)
-Sempre que uma arquitetura ou stack é definida, o OMEGA ativa o **Critical Engineering Review Mode**:
-1.  **Diagnóstico Interno**: Avalia se a arquitetura proposta suporta escala 10x e detecta complexidades artificiais ou teatralidades de microsserviços.
-2.  **Portões de Decisão (Severity Gates)**:
-    *   **🔴 CRITICAL** (Falha de segurança, quebra de DDD ou risco de perda de dados): **Bloqueia a execução** imediatamente, relata o problema e exige correção de design.
-    *   **🟡 HIGH** (Subotimização sob carga ou workarounds complexos): **Alerta e propõe** uma solução de engenharia opinada e aguarda confirmação rápida.
-    *   **🟢 MEDIUM** (Débito técnico controlável): **Gera um TODO** no arquivo de progresso e continua a execução.
-    *   **🔵 LOW** (Melhoria cosmética ou de comentários): **Avança silenciosamente**.
-
-### 🏢 Pilar II — Universal PMO Governance Operating System
-Gerenciamento de entregas de nível corporativo adaptado para múltiplos frameworks:
-*   **Maturidade e Risco**: O OMEGA ajusta a densidade documental e o controlo com base na criticidade e regulamentação (Waterfall para alta conformidade, Agile para descoberta contínua, Hybrid para transição de legados).
-*   **AI-Native PMO**: Varreduras inteligentes para prever gargalos de entrega, scope creep e fadiga cognitiva de equipes antes de virar um incidente.
-
-### 🧠 Pilar III — Decoupled 6-Core Memory Bank
-Para garantir persistência em sessões stateless, o OMEGA descentraliza a memória da skill e a armazena diretamente no repositório de trabalho do usuário (`memory-bank/`):
-1.  `projectbrief.md` — Requisitos fundamentais e escopo.
-2.  `productContext.md` — O porquê e as metas de experiência do utilizador.
-3.  `systemPatterns.md` — Blueprints e padrões de arquitetura (DDD, CQRS).
-4.  `techContext.md` — Stack, infraestrutura, versões e limitações do ambiente.
-5.  `activeContext.md` — Foco do sprint atual, decisões e lições aprendidas.
-6.  `progress.md` — Status das tarefas (`[ ]` planeado, `[/]` em progresso, `[x]` concluído).
-
----
-
-## 🛠️ CATÁLOGO COMPLETO DE COMANDOS (IMPECCABLE VOCABULARY)
-
-O OMEGA possui 23 comandos estáticos de refinamento visível e tomada de decisão:
-
-| Comando | Domínio | Raciocínio de Engenharia |
-|---|---|---|
-| **`craft [funcionalidade]`** | Construção | Planeia, desenha a UX e constrói a funcionalidade de ponta a ponta. |
-| **`shape [funcionalidade]`** | Arquitetura UI | Esboça o fluxo de tela e layouts baseados em espaçamento 4/8dp antes do código. |
-| **`critique [alvo]`** | Avaliação UX | Pontuação heurística de usabilidade e detecção de padrões genéricos. |
-| **`polish [alvo]`** | Refinamento | Ajustes finais em transições de micro-interações e alinhamento tipográfico. |
-| **`audit [alvo]`** | Qualidade | Varredura de acessibilidade (a11y), Core Web Vitals e conformidade estrutural. |
-| **`bolder [alvo]`** | Expressão | Adiciona contraste visual e pesos tipográficos a interfaces excessivamente neutras. |
-| **`quieter [alvo]`** | Contenção | Remove ruídos visuais, containers desnecessários e reduz a densidade da tela. |
-| **`distill [alvo]`** | Simplicidade | Remove complexidades de código, abstrações redundantes e loops prematuros. |
-| **`harden [alvo]`** | Robustez | Adiciona tratamento estrito de erros, internacionalização e testes de estresse. |
-| **`live`** | Live Server | Abre uma sessão em tempo real no navegador para testar variantes visuais. |
-
----
-
-## 📂 O COFRE PMO: ÍNDICE DE 18 ARQUIVOS MANDATÓRIOS
-
-Os projetos sob a governança do OMEGA mantêm em sua raiz de trabalho a seguinte matriz de indexação de entrega e conformidade:
-
-| Arquivo | Função de Engenharia |
-|---|---|
-| **[PROJECT_GOVERNANCE.md](file:///PROJECT_GOVERNANCE.md)** | RACI, modelo de escalonamento, governança baseada em risco e assinaturas. |
-| **[DELIVERY_MODEL.md](file:///DELIVERY_MODEL.md)** | Justificativa do framework, cadência das cerimónias, branching e rollback. |
-| **[EXECUTION_PLAN.md](file:///EXECUTION_PLAN.md)** | Backlog unificado, sequenciamento de milestones e análise de caminho crítico. |
-| **[PROJECT_STATUS.md](file:///PROJECT_STATUS.md)** | Estado atual do sprint, gráficos de burn-down e impedimentos ativos. |
-| **[ROADMAP.md](file:///ROADMAP.md)** | Linha do tempo estratégica de releases e entregas por época. |
-| **[RISKS.md](file:///RISKS.md)** | Matriz de probabilidade e impacto de riscos técnicos e de negócio. |
-| **[DECISIONS.md](file:///DECISIONS.md)** | Log histórico de tomadas de decisão e links rápidos para os ADRs ativos. |
-| **[CHANGELOG.md](file:///CHANGELOG.md)** | Ficheiro de versionamento público dos incrementos entregues. |
-| **[TEAM_STRUCTURE.md](file:///TEAM_STRUCTURE.md)** | Alocação de papéis, lideranças e equipes multidisciplinares (squads). |
-| **[DEPENDENCIES.md](file:///DEPENDENCIES.md)** | Mapa de bloqueadores de terceiros, pacotes e acoplamentos sistémicos. |
-| **[RELEASE_PLAN.md](file:///RELEASE_PLAN.md)** | Protocolo de publicação de pacotes e gating de segurança pré-produção. |
-| **[ARCHITECTURE_STATUS.md](file:///ARCHITECTURE_STATUS.md)** | Auditoria e integridade da separação física de bounded contexts. |
-| **[TECH_STACK_ANALYSIS.md](file:///TECH_STACK_ANALYSIS.md)** | Análise auto-detetada de frameworks, ORMs, custos e bibliotecas obsoletas. |
-| **[COST_ANALYSIS.md](file:///COST_ANALYSIS.md)** | FinOps, custos de infraestrutura em nuvem e token savings. |
-| **[WORKFLOW_ENGINE.md](file:///WORKFLOW_ENGINE.md)** | CI/CD scripts de pipelines e validações automatizadas de builds. |
-| **[QA_STATUS.md](file:///QA_STATUS.md)** | Cobertura de testes, k6 benchmark e modelos de combinatória de testes PICT. |
-| **[SECURITY_STATUS.md](file:///SECURITY_STATUS.md)** | Modelos de ameaças ativas, logs RBAC e validação contra o OWASP Top 10. |
-| **[OBSERVABILITY_STATUS.md](file:///OBSERVABILITY_STATUS.md)** | Monitoramento, SLOs mapeados e dashboards recomendados no Grafana. |
-
----
-
-## 🎨 O MOTOR DE ESTÉTICA E DIALS VISUAIS
-
-OMEGA rejeita frameworks e layouts genéricos ("AI slop") e força um rigoroso motor de estética baseado em três dials parametrizáveis:
-
-```css
-/* Dials de Design OMEGA */
-DESIGN_VARIANCE   3  /* 1 = Simétrico/Linear  ↔  10 = Caótico/Asimétrico */
-MOTION_INTENSITY  5  /* 1 = Estático          ↔  10 = Cinematográfico */
-VISUAL_DENSITY    4  /* 1 = Galeria de Arte   ↔  10 = Cockpit */
 ```
-
-### Paleta Curada HSL/OKLCH por Domínio
-*   **Healthcare**: DM Sans/Figtree • tons de esmeralda (`#059669` / `#34D399`)
-*   **Finance**: IBM Plex Sans • tons sóbrios de azul (`#1D4ED8` / `#60A5FA`)
-*   **Productivity**: Geist/Geist Mono • tons de violeta (`#7C3AED` / `#A78BFA`)
-
-### Curvas de Easing Não-Lineares (Banish transition: all)
-```css
-/* Transições suaves e profissionais */
---ease-out:    cubic-bezier(0.23, 1, 0.32, 1);
---ease-inout:  cubic-bezier(0.77, 0, 0.175, 1);
---ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+OMEGA-SKILL/
+    SKILL.md                     Core skill definition and boot sequence
+    README.md                    This file
+    references/                  25 domain reference files (read by agents at runtime)
+        00-troubleshooting.md
+        01-architecture.md
+        ...
+        23-memory-bank.md
+        design/                  Design command references (craft, shape, polish, etc.)
+        intelligence/            Orchestration and capability graphs
+        external/                Integrated skills (taste-skill, humanizer, ui-ux-pro-max)
+    scripts/
+        omega-cli.py             Vault discovery, initialization, ADR creation, audit
+        load-context.mjs         Design context loader
+        live.mjs                 Live server for visual iteration
+        design-parser.mjs        Design token and command parser
+    examples/
+        .obsidian/               Canonical Obsidian configuration
+            community-plugins.json
+            appearance.json      Vicious theme, amber accent
+            graph.json           Domain-colored knowledge graph
+            snippets/            CSS snippets (MCL, Heatmap Calendar, omega-theme)
+            plugins/             Plugin manifests
+        showcases/               Example HTML outputs
 ```
 
 ---
 
-_OMEGA v2.0 • Relentless Engineering & PMO Governance Operating System • Permanent Memory Bank_
+OMEGA v7 — Autonomous Engineering, Design, and Governance Operating System.
