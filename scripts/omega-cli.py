@@ -715,6 +715,183 @@ _OMEGA Knowledge Vault · [[32-AI-Memory/session-log]] · [[README]]_
 """, encoding='utf-8')
         print('  + 32-AI-Memory/error-memory.md')
 
+
+
+    # ─── Add omega scripts to package.json if it exists ─────────────────────
+    pkg_json = repo_root / 'package.json'
+    if pkg_json.exists():
+        import json as _json
+        try:
+            pkg_data = _json.loads(pkg_json.read_text(encoding='utf-8'))
+            scripts = pkg_data.setdefault('scripts', {})
+            omega_scripts = {
+                'omega:vault':   'python scripts/omega-cli.py resolve-vault',
+                'omega:init':    'python scripts/omega-cli.py init-vault',
+                'omega:status':  'python scripts/omega-cli.py status',
+                'omega:audit':   'python scripts/omega-cli.py audit',
+                'omega:adr':     'python scripts/omega-cli.py create-adr',
+            }
+            added = {k:v for k,v in omega_scripts.items() if k not in scripts}
+            if added:
+                scripts.update(added)
+                pkg_json.write_text(_json.dumps(pkg_data, indent=2), encoding='utf-8')
+                print(f'  ✓ package.json: added {len(added)} omega scripts')
+            else:
+                print('  ✓ package.json: omega scripts already present')
+        except Exception as e:
+            print(f'  ⚠ Could not update package.json: {e}')
+
+    # ─── Scaffold memory-bank/ at project root ─────────────────────────────
+    mb_dir = repo_root / 'memory-bank'
+    mb_dir.mkdir(exist_ok=True)
+
+    today = datetime.date.today().isoformat()
+
+    mb_files = {
+        'projectbrief.md': f"""---
+title: Project Brief
+created: {today}
+status: active
+tags: [memory, project, scope]
+---
+
+# Project Brief
+
+## Fundamental Requirements
+- [Core requirement 1]
+- [Core requirement 2]
+
+## Scope Boundaries
+**In scope:** [list what is explicitly included]
+**Out of scope:** [list what is explicitly excluded]
+
+## Success Criteria
+- [How will we know this is done?]
+""",
+        'productContext.md': f"""---
+title: Product Context
+created: {today}
+status: active
+tags: [memory, product, ux]
+---
+
+# Product Context
+
+## Why This Project Exists
+[The specific problem being solved and for whom]
+
+## User Experience Goals
+- [UX Goal 1]
+- [UX Goal 2]
+
+## User Flows
+1. [Primary flow]
+2. [Secondary flow]
+""",
+        'systemPatterns.md': f"""---
+title: System Patterns
+created: {today}
+status: active
+tags: [memory, architecture, patterns]
+---
+
+# System Patterns
+
+## Architecture
+[High-level bounded contexts and component layers]
+
+## Key Patterns
+- [Pattern 1: e.g., DDD with bounded contexts]
+- [Pattern 2: e.g., CQRS for order processing]
+
+## Critical Paths
+[Component relationships and critical implementation paths]
+""",
+        'techContext.md': f"""---
+title: Tech Context
+created: {today}
+status: active
+tags: [memory, tech, stack]
+---
+
+# Tech Context
+
+## Stack
+- Runtime: [e.g., Node.js 22 / Python 3.12]
+- Framework: [e.g., Next.js 15, NestJS 10]
+- Database: [e.g., PostgreSQL 16 via Supabase]
+- State: [e.g., Zustand]
+- Language: TypeScript strict
+
+## Development Setup
+- Package manager: pnpm
+- Node version: [from .nvmrc or package.json engines]
+
+## Constraints
+- Package limit: keep dependencies minimal
+- Security: OWASP Zero-Trust compliance
+""",
+        'activeContext.md': f"""---
+title: Active Context
+created: {today}
+updated: {today}
+status: active
+tags: [memory, session, focus]
+---
+
+# Active Context
+
+## Current Work Focus
+[Description of the active sprint task or feature]
+
+## Recent Changes
+[Summary of modifications made in recent sessions]
+
+## Active Decisions
+[Key design or architecture choices made this session]
+
+## Next Session
+[What to pick up at the start of the next session]
+""",
+        'progress.md': f"""---
+title: Progress
+created: {today}
+updated: {today}
+status: active
+tags: [memory, tasks, progress]
+---
+
+# Progress
+
+## Status
+- [ ] planned task
+- [/] in-progress task
+- [x] completed task
+
+## Known Issues
+[Unresolved items or pending bugfixes]
+
+## Session History
+| Date | Focus | Outcome |
+|------|-------|---------|
+| {today} | Vault initialized | memory-bank scaffolded |
+""",
+    }
+
+    mb_created = 0
+    for filename, content in mb_files.items():
+        mb_file = mb_dir / filename
+        if not mb_file.exists():
+            mb_file.write_text(content.replace("{today}", today), encoding='utf-8')
+            print(f'  + memory-bank/{filename}')
+            mb_created += 1
+
+    if mb_created > 0:
+        print(f'  ✓ memory-bank/ scaffolded ({mb_created} files)')
+    else:
+        print('  ✓ memory-bank/ already exists')
+
+
     # Write vault config file so other tools can find it
     config = {
         'vault_path': str(vault_path),

@@ -11,7 +11,7 @@ references/
 
 ---
 
-## Layer 1 — Engineering Domains (19 files)
+## Layer 1 — Engineering Domains (27 files)
 
 Read before executing the corresponding engineering domain.
 
@@ -37,6 +37,15 @@ Read before executing the corresponding engineering domain.
 | `18-marketing-growth.md` | CRO, copywriting, conversion playbooks | Growth and marketing |
 | `19-google-workspace.md` | GWS API, Model Armor, shell escaping | GWS integrations |
 
+| `20-taste-engine.md` | Anti-slop frontend: 3-dial system, 47 bans, Pre-Flight checklist, liquid-glass CSS, brand morphing | Any frontend/UI task |
+| `21-humanizer.md` | Anti-AI writing: 29-pattern audit, voice calibration, em-dash ban | Any text output: docs, ADRs, copy |
+| `22-find-skills.md` | Skill discovery, registry, quality gates | When extending OMEGA |
+| `23-memory-bank.md` | 6-core memory bank scaffolding, session protocol, vault sync | Session start/end every time |
+| `24-design-system-tokens.md` | OKLCH scales, fluid type/spacing math, token architecture, design_master.md | Any design token or design system work |
+| `25-repo-infrastructure.md` | .env validation, CI/CD pipelines, Helm, Ingress/TLS, service mesh, edge functions, ISO audit | Any infra, DevOps, or compliance task |
+| `26-repo-cleanup.md` | Import mapping, dead code, AI-generated file cleanup, migration protocol, scalability gates | Any repo cleanup, refactor, or health audit |
+| `00-troubleshooting.md` | Universal debugging playbook: Node, Postgres, K8s, CI, Auth, Performance | FIRST when anything is broken |
+
 ---
 
 ## Layer 2 — Design Vocabulary (41 files in `design/`)
@@ -46,8 +55,8 @@ Loaded by the impeccable command router. Each file corresponds to one command.
 ### Context Setup (load first for any design task)
 | File | Command | Role |
 |------|---------|------|
-| `design/teach.md` | `teach` | Set up PRODUCT.md and DESIGN.md |
-| `design/document.md` | `document` | Generate DESIGN.md from existing code |
+| `design/teach.md` | `teach` | Set up PRODUCT.md and DESIGN.md (created in project root by user) |
+| `design/document.md` | `document` | Generate DESIGN.md from existing code (project file) |
 | `design/brand.md` | — | Register for brand/marketing surfaces |
 | `design/product.md` | — | Register for product/app surfaces |
 
@@ -136,3 +145,7 @@ Consult for system-level decisions. Read-only strategic reference.
 | `intelligence/10-documentation-audit-map.md` | Obsidian sync governance |
 | `intelligence/11-token-optimization-audit.md` | Token cost baseline and RTK rules |
 | `intelligence/12-cloud-cost-optimization-audit.md` | FinOps right-sizing baseline |
+
+---
+
+
