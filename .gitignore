@@ -12,3 +12,7 @@ build/
 .env
 .env.*
 !.env.example
+
+# Software factory: estado local, nao versionado.
+/factory/jobs/
+/.worktrees/
